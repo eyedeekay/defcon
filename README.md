@@ -12,9 +12,9 @@ Presenters
   - Mostly my desk or the yard, sometimes a hammock!
   - hankhill19580@gmail.com
   - https://github.com/eyedeekay
+  - https://reddit.com/u/alreadyburnt
 
 <div style="page-break-after: always;"></div>
-
 
 Abstract
 --------
@@ -26,9 +26,9 @@ what they are already doing in non-anonymous Peer-to-Peer applications. It
 begins with an introduction to the I2P plugins system, showing how the existing
 plugins set themselves up to do communication over i2p and what's good and bad
 about each approach. Afterwards, we'll continue on to the programattically
-controlling I2PTunnels by using I2PTunnel itself in your application and begin
-exploring the "socket-like" I2P Libraries for other languages. Finally, we'll
-take a dive into the SAMv3 API by creating a new library utilizing it in Lua.
+controlling I2P via it's SAM and I2PControl API's. Finally, we'll take a dive
+into the SAMv3 API by starting a new library utilizing it in Lua and writing
+a simple application.
 
 We(The I2P Project) would also like to request a table for 4 in the main room
 for the duration of the conference so that we can hang a banner and have

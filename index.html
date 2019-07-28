@@ -27,6 +27,10 @@
  | I2CP  |            | I2PControl |
  =-+---+-=            =------------=
    |   |
+ =-+---|-------=
+ | |Str|eaming |
+ =-|---+-------=
+   |   |
    | =-+------=    =-------------------=
    | | SAM v3 +----+  SAM APPLICATIONS |
    | =--------=    =-------------------=
@@ -34,6 +38,7 @@
  =-+-----=      =-------------------=
  | BOB   +------+  BOB APPLICATIONS |
  =-------=      =-------------------=</code></pre>
+<p>A sketch of the I2P API's, their relationship to eachother, and their relationship to the router.</p>
 <h2 id="i2cp">I2CP</h2>
 <p>I2CP is the core I2P API, it underlies many of the other I2P API's. It is also the most complex to use outside of Java, but recently several libraries have emerged that provide partial or full I2CP functionality from other languages. C, Java, and Javascript libraries are available, as is one Go library with partial support.</p>
 <h2 id="bob">BOB</h2>
@@ -92,6 +97,7 @@
 <p>In a surprisingly short amount of time, you too can develop extensive tooling that makes building new I2P applications and, more importantly, adapting your existing applications to use I2P simple, reliable, and familiar.</p>
 <p>Or you can literally just write your own i2ptunnel that you can embed in your existing application. I did that once. It works really well. I don't think we need a gazillion 'socat for I2P' out there but some would argue we didn't need a third so who am I to judge.</p>
 <h3 id="a-very-simple-sam-client">A Very Simple SAM Client</h3>
+<p>TODO</p>
 <div style="page-break-after: always;"></div>
 
 <h2 id="bundling-an-i2p-router-with-your-sam-application">Bundling an I2P Router with your SAM Application</h2>
@@ -115,6 +121,33 @@
     File &quot;clients.config&quot;
   endGetI2P:
 SectionEnd</code></pre>
+<h3 id="wait-how-can-i-make-sure-the-router-i-am-bundling-is-current">Wait, how can I make sure the router I am bundling is current?</h3>
+<p>Well here's how I once did it in a Makefile:</p>
+<pre class="sourceCode Make"><code>geti2p: i2pinstaller.exe
+
+i2pinstaller.exe: url
+    wget -c `cat geti2p.url` -O i2pinstaller.exe
+
+url:
+    echo -n &#39;https://launchpad.net&#39; | tee .geti2p.url
+    curl -s https://launchpad.net/i2p/trunk/+rdf | \
+        grep specifiedAt | \
+        head -n 3 | \
+        tail -n 1 | \
+        sed &#39;s|                &lt;lp:specifiedAt rdf:resource=&quot;||g&#39; | \
+        sed &#39;s|+rdf&quot;/&gt;||g&#39; | tee -a .geti2p.url
+    echo -n &#39;+download/i2pinstall_&#39; | tee -a .geti2p.url
+    curl -s https://launchpad.net/i2p/trunk/+rdf | \
+        grep specifiedAt | \
+        head -n 3 | \
+        tail -n 1 | \
+        sed &#39;s|                &lt;lp:specifiedAt rdf:resource=&quot;/i2p/trunk/||g&#39; | \
+        sed &#39;s|/+rdf&quot;/&gt;||g&#39; | tee -a .geti2p.url
+    echo &#39;_windows.exe&#39; | tee -a .geti2p.url
+    cat .geti2p.url | tr -d &#39;\n&#39; | tee geti2p.url
+    rm -f .geti2p.url</code></pre>
+<h3 id="wait-what-if-i-dont-want-to-make-my-clients-install-a-jvm">Wait, what if I don't want to make my clients install a JVM</h3>
+<p>Enter Jlink, i2pd TODO</p>
 <div style="page-break-after: always;"></div>
 
 <div style="page-break-after: always;"></div>

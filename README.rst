@@ -52,6 +52,10 @@ Current and Former I2P API's
     | I2CP  |            | I2PControl |
     =-+---+-=            =------------=
       |   |
+    =-+---|-------=
+    | |Str|eaming |
+    =-|---+-------=
+      |   |
       | =-+------=    =-------------------=
       | | SAM v3 +----+  SAM APPLICATIONS |
       | =--------=    =-------------------=
@@ -59,6 +63,9 @@ Current and Former I2P API's
     =-+-----=      =-------------------=
     | BOB   +------+  BOB APPLICATIONS |
     =-------=      =-------------------=
+
+A sketch of the I2P API's, their relationship to eachother, and their
+relationship to the router.
 
 I2CP
 ----
@@ -234,6 +241,8 @@ a third so who am I to judge.
 A Very Simple SAM Client
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+TODO
+
 .. raw:: html
 
    <div style="page-break-after: always;"></div>
@@ -281,6 +290,41 @@ Kicking off a child installer with NSIS
      endGetI2P:
    SectionEnd
 
+Wait, how can I make sure the router I am bundling is current?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Well here's how I once did it in a Makefile:
+
+.. code:: Make
+
+   geti2p: i2pinstaller.exe
+
+   i2pinstaller.exe: url
+       wget -c `cat geti2p.url` -O i2pinstaller.exe
+
+   url:
+       echo -n 'https://launchpad.net' | tee .geti2p.url
+       curl -s https://launchpad.net/i2p/trunk/+rdf | \
+           grep specifiedAt | \
+           head -n 3 | \
+           tail -n 1 | \
+           sed 's|                <lp:specifiedAt rdf:resource="||g' | \
+           sed 's|+rdf"/>||g' | tee -a .geti2p.url
+       echo -n '+download/i2pinstall_' | tee -a .geti2p.url
+       curl -s https://launchpad.net/i2p/trunk/+rdf | \
+           grep specifiedAt | \
+           head -n 3 | \
+           tail -n 1 | \
+           sed 's|                <lp:specifiedAt rdf:resource="/i2p/trunk/||g' | \
+           sed 's|/+rdf"/>||g' | tee -a .geti2p.url
+       echo '_windows.exe' | tee -a .geti2p.url
+       cat .geti2p.url | tr -d '\n' | tee geti2p.url
+       rm -f .geti2p.url
+
+Wait, what if I don't want to make my clients install a JVM
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Enter Jlink, i2pd TODO
 
 .. raw:: html
 

@@ -18,6 +18,10 @@ Current and Former I2P API's
     | I2CP  |            | I2PControl |
     =-+---+-=            =------------=
       |   |
+    =-+---|-------=
+    | |Str|eaming |
+    =-|---+-------=
+      |   |
       | =-+------=    =-------------------=
       | | SAM v3 +----+  SAM APPLICATIONS |
       | =--------=    =-------------------=
@@ -25,6 +29,9 @@ Current and Former I2P API's
     =-+-----=      =-------------------=
     | BOB   +------+  BOB APPLICATIONS |
     =-------=      =-------------------=
+
+A sketch of the I2P API's, their relationship to eachother, and their
+relationship to the router.
 
 I2CP
 ----

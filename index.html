@@ -1,15 +1,124 @@
+<p><img src="defcon.jpeg" alt="I2P For Application Developers" /></p>
+<div class="meta">
+
+</div>
 <h1 id="workshop-title-i2p-for-application-developers">Workshop Title: I2P for Application Developers</h1>
 <h2 id="presenters">Presenters</h2>
 <ul>
 <li>idk</li>
-</ul>
-<ul>
 <li>I2P Application Developer</li>
 <li>Mostly my desk or the yard, sometimes a hammock!</li>
 <li><a href="mailto:hankhill19580@gmail.com">hankhill19580@gmail.com</a></li>
 <li><a href="https://github.com/eyedeekay" class="uri">https://github.com/eyedeekay</a></li>
 <li><a href="https://reddit.com/u/alreadyburnt" class="uri">https://reddit.com/u/alreadyburnt</a></li>
 </ul>
+<div style="page-break-after: always;"></div>
+
+<h1 id="current-and-former-i2p-apis">Current and Former I2P API's</h1>
+<pre><code>I2P Network
+    +   +
+    |   |
+    |   |
+=---+---+-----------------=
+|       I2P Router        |
+=--+--------------------+-=
+   |                    |
+ =-+-----=            =-+----------=
+ | I2CP  |            | I2PControl |
+ =-+---+-=            =------------=
+   |   |
+   | =-+------=    =-------------------=
+   | | SAM v3 +----+  SAM APPLICATIONS |
+   | =--------=    =-------------------=
+   |
+ =-+-----=      =-------------------=
+ | BOB   +------+  BOB APPLICATIONS |
+ =-------=      =-------------------=</code></pre>
+<h2 id="i2cp">I2CP</h2>
+<p>I2CP is the core I2P API, it underlies many of the other I2P API's. It is also the most complex to use outside of Java, but recently several libraries have emerged that provide partial or full I2CP functionality from other languages. C, Java, and Javascript libraries are available, as is one Go library with partial support.</p>
+<h2 id="bob">BOB</h2>
+<p>BOB is a less complicated to use API, but it is currently unmaintained. We don't plan on dropping it soon, but we also have not been adding the new features that are available in SAM Version 3. Many of the best ideas from the BOB API have been ported to the more modern SAMv3 API. Our advice is that new applications should not be using BOB, and that the</p>
+<h2 id="sam-version-1-2">SAM Version 1, 2</h2>
+<p>Deprecated and for all intents and purposes removed.</p>
+<h2 id="i2pcontrol">I2PControl</h2>
+<p>I2PControl is a little different. Rather than setting up connections between I2P applications, it's used for configuring and retrieving information about the router programmatically.</p>
+<h2 id="sam-version-3">SAM Version 3</h2>
+<p>The current recommended API for applications of all types to communicate via I2P is the SAMv3 API. It provides a convenient way to set up, communicate through, and tear down I2P connections. It is designed so that it can implement the API familiar to your programming language in a simple and straightforward way. For example, we can implement a Socket in Java or a net.Conn in Go.</p>
+<p>SAM will by and large be the focus of this workshop.</p>
+<div style="page-break-after: always;"></div>
+
+<h2 id="which-api-do-you-need">Which API do You Need?</h2>
+<p>If you need to make connections between applications automatically, then you need the <strong>SAMv3 API</strong>.</p>
+<p>If you need to monitor or adjust the I2P router's connection, bandwidth usage, or change it's status, then you need the <strong>I2PControl API</strong>.</p>
+<p>If you need to simply check the presence of an I2P router before making connections, one way is to make a quick connection to the <strong>I2CP API</strong>. If you're writing a Java application, the I2CP API may also be a good choice. Besides that, unless you know why you need to use I2CP, you probably just need SAM.</p>
+<h3 id="but-why-not-just-set-up-i2ptunnel">But Why Not Just Set Up I2PTunnel?</h3>
+<p>I2Ptunnel is good at forwarding existing services to I2P, and it can concievably be used for many applications. It does provide a SOCKS proxy after all. However, setting up i2ptunnels is an involved process, with lots of settings that are intimidating to your users. Using SAM, you set up the connections and apply all the options inside the application itself, <strong>giving you the all-important</strong> <strong>oppourtunity to set up sane defaults</strong> on behalf of your users.</p>
+<p>A good example can be found in applications that are federated with Activitypub. While I2Ptunnel is perfectly capable of making AP applications available over I2P, not many new users will correctly configure the AP-based service correctly on their first try. The process of setting up connections, deciding whether or not to &quot;Bridge&quot; clearnet connections or remain strictly anonymous, deciding tunnel length and the number of tunnels in your destination &quot;Pool,&quot; and most other I2P connection-related functions.</p>
+<div style="page-break-after: always;"></div>
+
+<h2 id="what-is-sam">What is SAM</h2>
+<p>SAM is a simple API for controlling <strong>connections</strong> on the I2P i2p router in a way which is familiar to people who write internet applications. To use it, you simply set up a SAM connection and then use it like a streaming connection or to send datagrams, either with or without a repliable address. You can use these connections just like their TCP/IP equivalents for basically every intent or purpose.</p>
+<h3 id="stages-of-the-sam-setup-process">Stages of the SAM Setup process</h3>
+<ol type="1">
+<li>Handshake</li>
+</ol>
+<ul>
+<li>This is done so that you can negotiate the features of your SAM client with the SAM service.</li>
+<li>First, establish a socket connection to the I2P router's SAM Port.</li>
+<li>From the client, it's a simple &quot;HELLO&quot; message which can contain optional version and authentication information.</li>
+<li>When the server replies, it will respond with OK and the maximum supported SAM version.</li>
+</ul>
+<ol start="2" type="1">
+<li>Session Establishment</li>
+</ol>
+<ul>
+<li>Once your handshake is complete, you need to establish a session with SAM to control connections.</li>
+<li>To create a session, you send a &quot;SESSION CREATE&quot; message which must declare the type of connection and messaging you will be doing, a unique name for the connection which will allow you to refer to the client, and either a full public/private base64-encoded key pair for the local tunnel or TRANSIENT for a tunnel created with a new keypair for this session.</li>
+<li>Optionally, it can specify a signature type. From now on, it is recommended that libraries supporting SAM 3.1 or greater use ed25519 signatures by default.</li>
+<li>When the SAM service replies, it will return a result of either OK indicating that the session was established successfully or a string indicating the type of error that was encountered. If the session was established successfully, the reply will also include the destination keypair or the newly established session.</li>
+</ul>
+<ol start="3" type="1">
+<li>Connections/Messaging</li>
+</ol>
+<ul>
+<li>Now that you've established a session, you can start making connections and/or sending messages.</li>
+<li>Streaming connections are bi-directional, and can either be connected as a client to a server or listened upon to accept connections as a server to a client. Predictably, the commands you send to the SAM bridge to set up each kind of connection is &quot;STREAM CONNECT&quot; for connections and &quot;STREAM ACCEPT&quot; for listeners.</li>
+<li>Datagrams can be sent after a datagram style session has been established by sending datagrams to the socket. They can be repliable and include a return address or raw and not include a return address.</li>
+<li>Once you have created a Streaming connection, any further communication on that socket will be done with I2P, whether it be an HTTP Client, a connection between bittorrent peers, or any other kind of Streaming communication.</li>
+</ul>
+<h3 id="make-your-code-re-usable">Make your Code Re-Usable!</h3>
+<p>Because of the deliberate similarity to existing streaming and datagram communications, every language makes it possible to reduce this process to one or two steps at sensible layers of abstraction. Starting from the most similar, like a Socket in Java, a connection in Javascript, or a net.Conn in Go. The actual thing will vary from language to language, but when creating a library, you should probably start soon.</p>
+<p>Once you've done that, you've laid the foundation to alter the other network parts of your language. In many cases, it may be possible to forward a connection using the code you've already written, or to replace an underlying structure with your SAM-enabled version.</p>
+<p>In a surprisingly short amount of time, you too can develop extensive tooling that makes building new I2P applications and, more importantly, adapting your existing applications to use I2P simple, reliable, and familiar.</p>
+<p>Or you can literally just write your own i2ptunnel that you can embed in your existing application. I did that once. It works really well. I don't think we need a gazillion 'socat for I2P' out there but some would argue we didn't need a third so who am I to judge.</p>
+<h3 id="a-very-simple-sam-client">A Very Simple SAM Client</h3>
+<div style="page-break-after: always;"></div>
+
+<h2 id="bundling-an-i2p-router-with-your-sam-application">Bundling an I2P Router with your SAM Application</h2>
+<p>Sometimes, the details of setting up your SAM application require you to know whether an I2P router is present and ready to accept SAM connections or not. As of release 0.9.42 in a few weeks, this becomes a very easy problem to solve. Let's take a slightly complicated case as an example, a non-JVM, non-plugin application for Windows.</p>
+<p>Since there's a good chance your SAM Application is in a non-Java, non-JVM language, it may be difficult or impossible to build as a plugin for the I2P router. If that's the case, then we can't <em>assume</em> a router is there.</p>
+<p>Since this is a Windows machine, we can't <em>assume</em> that a package manager is available with a viable I2P router to install. If that's the case, we'll have to install our own.</p>
+<h3 id="kicking-off-a-child-installer-with-nsis">Kicking off a child installer with NSIS</h3>
+<pre class="sourceCode NSIS"><code>Section &quot;GetI2P&quot;
+  SetOutPath $INSTDIR
+    IfFileExists &quot;$PROGRAMFILES\i2p\i2p.exe&quot; endGetI2P beginGetI2P
+    Goto endGetI2P
+  beginGetI2P:
+    MessageBox MB_YESNO &quot;Your system does not appear to have i2p installed.$\n$\nDo you wish to install it now?&quot;
+    File &quot;i2pinstaller.exe&quot;
+    ExecWait &quot;$INSTDIR\i2pinstaller.exe&quot;
+    SetOutPath &quot;$PROGRAMFILES\i2p&quot;
+    File &quot;clients.config&quot;
+    SetOutPath &quot;C:\\ProgramData\i2p&quot;
+    File &quot;clients.config&quot;
+    SetOutPath &quot;$AppData\I2P&quot;
+    File &quot;clients.config&quot;
+  endGetI2P:
+SectionEnd</code></pre>
+<div style="page-break-after: always;"></div>
+
+<div style="page-break-after: always;"></div>
+
 <div style="page-break-after: always;"></div>
 
 <h2 id="abstract">Abstract</h2>

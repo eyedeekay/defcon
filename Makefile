@@ -1,8 +1,16 @@
 
+help:
+	@cat README_REPO.md
+
 new: README rst
-	pandoc --highlight-style=tango -f gfm COVER.md -o - | tee index.html
-	pandoc --highlight-style=tango -f gfm PROPOSAL.md -o - | tee -a index.html
-	pandoc -p --highlight-style=tango -f rst README.rst -o README.pdf
+	pandoc -p -t html5 --css=style.css --highlight-style=tango -f rst README.rst -o index.html
+	#sed -i 's|<blockquote>|<pre><code>|g' index.html
+	#sed -i 's|<p>=||g' index.html
+	#sed -i 's|</blockquote>|</pre></code>|g' index.html
+	#sed -i 's|=</p>||g' index.html
+	sed -i 's\|</code></pre>\|\g' index.html
+	sed -i 's\<pre><code>=\=\g' index.html
+	pandoc -p -t html5 --css=style.css --highlight-style=tango index.html -o README.pdf
 
 plan:
 	pandoc --highlight-style=tango -f gfm PLAN.md -o - | tee -a index.html
@@ -23,12 +31,22 @@ meta:
 	@echo '' | tee -a COVER.rst
 
 rst: meta
+	torst 00-IMAGE.md | tee IMAGE.rst
 	torst PROPOSAL.md | tee PROPOSAL.rst
 	torst 01-CURRENT_APIS.md | tee current_apis.rst
 	torst 02-WHY_AN_API.md | tee which_api.rst
-	torst 03-BUNDLING.md | tee bundling_i2p.rst
-	torst 04-SETTING_UP_SAM.md | tee setting_up_sam.rst
-	cat COVER.rst PROPOSAL.rst > README.rst
+	torst 03-WHAT_IS_SAM.md | tee what_is_sam.rst
+	torst 04-BUNDLING.md | tee bundling_i2p.rst
+	torst 05-WHAT_SAM_CANT_DO.md | tee what_sam_cant_do.rst
+	torst 06-EXAMPLES.md | tee examples.rst
+	cat IMAGE.rst COVER.rst \
+		current_apis.rst SPACER.rst \
+		which_api.rst SPACER.rst \
+		what_is_sam.rst SPACER.rst \
+		bundling_i2p.rst SPACER.rst \
+		what_sam_cant_do.rst SPACER.rst \
+		examples.rst SPACER.rst \
+		PROPOSAL.rst > README.rst
 
 README:
 	@echo "# defcon.prop" | tee README.md

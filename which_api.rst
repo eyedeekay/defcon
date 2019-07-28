@@ -1,4 +1,3 @@
-
 Which API do You Need?
 ----------------------
 
@@ -14,7 +13,8 @@ you're writing a Java application, the I2CP API may also be a good choice.
 Besides that, unless you know why you need to use I2CP, you probably just need
 SAM.
 
-### But Why Not Just Set Up I2PTunnel?
+But Why Not Just Set Up I2PTunnel?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 I2Ptunnel is good at forwarding existing services to I2P, and it can concievably
 be used for many applications. It does provide a SOCKS proxy after all. However,
@@ -30,4 +30,3 @@ on their first try. The process of setting up connections, deciding whether or
 not to "Bridge" clearnet connections or remain strictly anonymous, deciding
 tunnel length and the number of tunnels in your destination "Pool," and most
 other I2P connection-related functions.
-

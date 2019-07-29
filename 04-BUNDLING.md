@@ -17,6 +17,12 @@ install our own.
 
 ### Kicking off a child installer with NSIS
 
+One common way of creating a Windows installer for an application is to use
+Nullsoft Scriptable Install System. NSIS has the ability to do two essential
+things. First, it can check for the existence of the file, and second, it can
+start a new Windows application, and that application can be the I2P installer
+package.
+
 ``` NSIS
 Section "GetI2P"
   SetOutPath $INSTDIR
@@ -36,16 +42,27 @@ Section "GetI2P"
 SectionEnd
 ```
 
+As you can see, after the i2pinstaller.exe is done running, a clients.config
+file is copied to the I2P application data directory. We can **ONLY** do it in
+this case because we already determines that I2P was not installed, and it is
+**ONLY** in this example in this way because 0.9.42 isn't out yet.
+
 ### Wait, how can I make sure the router I am bundling is current?
 
 Well here's how I once did it in a Makefile:
 
 ``` Make
+# geti2p is an alias for i2pinstaller.exe
 geti2p: i2pinstaller.exe
 
+# This downloads the I2P installer using the url composed by the 'make url'
+# target.
 i2pinstaller.exe: url
 	wget -c `cat geti2p.url` -O i2pinstaller.exe
 
+# This fetches an RDF listing of I2P versions from launchpad and looks for
+# the most recent stable version. Using this information, it then constructs
+# a URL to download the Windows I2P router installer from Launchpad.
 url:
 	echo -n 'https://launchpad.net' | tee .geti2p.url
 	curl -s https://launchpad.net/i2p/trunk/+rdf | \
@@ -65,6 +82,8 @@ url:
 	cat .geti2p.url | tr -d '\n' | tee geti2p.url
 	rm -f .geti2p.url
 ```
+
+As we move past 0.9.42,
 
 ### Wait, what if I don't want to make my clients install a JVM?
 

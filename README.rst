@@ -83,7 +83,8 @@ BOB is a less complicated to use API, but it is currently unmaintained. We don't
 plan on dropping it soon, but we also have not been adding the new features
 that are available in SAM Version 3. Many of the best ideas from the BOB API
 have been ported to the more modern SAMv3 API. Our advice is that new
-applications should not be using BOB, and that the
+applications should not be using BOB, and that the applications using BOB(Both
+of them) should consider migrating to SAM.
 
 SAM Version 1, 2
 ----------------
@@ -271,6 +272,12 @@ install our own.
 Kicking off a child installer with NSIS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+One common way of creating a Windows installer for an application is to use
+Nullsoft Scriptable Install System. NSIS has the ability to do two essential
+things. First, it can check for the existence of the file, and second, it can
+start a new Windows application, and that application can be the I2P installer
+package.
+
 .. code:: NSIS
 
    Section "GetI2P"
@@ -290,6 +297,10 @@ Kicking off a child installer with NSIS
      endGetI2P:
    SectionEnd
 
+As you can see, after the i2pinstaller.exe is done running, a clients.config
+file is copied to the I2P application data directory. We can **ONLY** do it in
+this case because we already determines that I2P was not installed.
+
 Wait, how can I make sure the router I am bundling is current?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -297,11 +308,17 @@ Well here's how I once did it in a Makefile:
 
 .. code:: Make
 
+   # geti2p is an alias for i2pinstaller.exe
    geti2p: i2pinstaller.exe
 
+   # This downloads the I2P installer using the url composed by the 'make url'
+   # target.
    i2pinstaller.exe: url
        wget -c `cat geti2p.url` -O i2pinstaller.exe
 
+   # This fetches an RDF listing of I2P versions from launchpad and looks for
+   # the most recent stable version. Using this information, it then constructs
+   # a URL to download the Windows I2P router installer from Launchpad.
    url:
        echo -n 'https://launchpad.net' | tee .geti2p.url
        curl -s https://launchpad.net/i2p/trunk/+rdf | \
@@ -321,20 +338,15 @@ Well here's how I once did it in a Makefile:
        cat .geti2p.url | tr -d '\n' | tee geti2p.url
        rm -f .geti2p.url
 
-Wait, what if I don't want to make my clients install a JVM
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Wait, what if I don't want to make my clients install a JVM?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Enter Jlink, i2pd TODO
 
-.. raw:: html
+Wait, how to I finally make sure that it has the SAM API enabled?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-   <div style="page-break-after: always;"></div>
-
-
-.. raw:: pdf
-
-    PageBreak oneColumn
-
+Use clients.config.d TODO
 
 .. raw:: html
 
@@ -344,7 +356,32 @@ Enter Jlink, i2pd TODO
 .. raw:: pdf
 
     PageBreak oneColumn
+Two big things, and one little thing, that SAM can't do and how to easily forget about them
+-------------------------------------------------------------------------------------------
 
+Tell you that an I2P router is running when SAM is not enabled
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Adjust the I2P Router's settings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Natively use an outproxy
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Outproxy is a concept primarily known to i2ptunnel, and with i2ptunnel,
+primarily known to the HTTP and SOCKS proxies. SAM doesn't consider outproxying
+at all on it's own. If you are using SAM and want to access the clear net, you
+may wish to use an additional anonymizer when handling clearnet traffic, or
+offer a "Bridged" mode which is not anonymous but which is useful for bringing
+content to anonymous users
+
+That said, since SAM connections can be used like their non-anonymous
+counterparts, it is actually very simple to use SAM to build an out-proxy. While
+this technique hasn't been used yet, and it would require careful considerations
+for the anonymity of the applications, there are cases where a SAM-based
+outproxy would be useful to incorporate into an application. One such
+application would be a peer-to-peer CDN which bridges I2P and clearnet
+content.
 
 .. raw:: html
 
@@ -354,64 +391,14 @@ Enter Jlink, i2pd TODO
 .. raw:: pdf
 
     PageBreak oneColumn
-Abstract
---------
+Examples
+========
 
-The workshop provides an introduction to the ways an application can be made to
-work with the I2P Anonymous Peer-to-Peer network. Developers should learn that
-the use of anonymous P2P in their applications need not be that different than
-what they are already doing in non-anonymous Peer-to-Peer applications. It
-begins with an introduction to the I2P plugins system, showing how the existing
-plugins set themselves up to do communication over i2p and what's good and bad
-about each approach. Afterwards, we'll continue on to the programattically
-controlling I2P via its SAM and I2PControl API's. Finally, we'll take a dive
-into the SAMv3 API by starting a new library utilizing it in Lua and writing
-a simple application.
+.. raw:: html
 
-We(The I2P Project) would also like to request a table for 4 in the main room
-for the duration of the conference so that we can hang a banner and have
-meetings with other users and organizations about incorporating I2P into their
-projects. *We would like this table even if the workshop proposal is rejected.*
-*Whitney advised us that this was the place to apply for table space.*
+   <div style="page-break-after: always;"></div>
 
-Intended Audience
------------------
 
-Developers of new and existing applications that make use of networked
-communications that may benefit from enhanced privacy.
+.. raw:: pdf
 
-Presenter Biographics
----------------------
-
-idk writes I2P applications and libraries and likes to point out all the cool
-things you actually can do with anonymous networks. He originated one SAM
-library and maintains two others, and tries to participate in pretty much all
-of them. idk also likes to make sure I2P noobs get the help they need on Reddit
-and blogs about I2P application development.
-
-I2P is a 17-year-old Open-Source project dedicated to enabling privacy and
-anonymity using advanced cryptography. It enables client-server applications,
-hidden services, and peer-to-peer applications to work anonymously and provides
-API's orientated toward application development in addition to browsing.
-
-Materials provided
-------------------
-
-Each participant will be provided with a detailed handout which will provide
-a schedule of the workshop with references to additional resources relevant to
-each section. The full source code of the Lua library that will be developed
-will be publshed prior to Def Con to be used as a resource during the workshop.
-Practical activities will be distributed during the workshop to the participants
-to demonstrate the techniques that will be illustrated.
-
-Audio/Visual/Computer Requirements
-----------------------------------
-
-Participants are welcome, but not required, to follow along with the examples
-and practicum provided during the workshop. In order to do so, they will need
-a laptop with internet access and their choice of Lua interpreter installed.
-They should also have I2P routers installed, either I2P or i2pd will do, but if
-they do not wish to install a router, I will bring a machine which will expose
-the API's they need for testing purposes they can use while they are here. I
-will also need a way to display examples to the workshop participants, either a
-projector or a large television would be best.
+    PageBreak oneColumn

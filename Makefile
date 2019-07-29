@@ -45,8 +45,8 @@ rst: meta
 		what_is_sam.rst SPACER.rst \
 		bundling_i2p.rst SPACER.rst \
 		what_sam_cant_do.rst SPACER.rst \
-		examples.rst SPACER.rst \
-		PROPOSAL.rst > README.rst
+		examples.rst SPACER.rst > README.rst #\
+		#PROPOSAL.rst > README.rst
 
 README:
 	@echo "# defcon.prop" | tee README.md

@@ -48,7 +48,8 @@ BOB is a less complicated to use API, but it is currently unmaintained. We don't
 plan on dropping it soon, but we also have not been adding the new features
 that are available in SAM Version 3. Many of the best ideas from the BOB API
 have been ported to the more modern SAMv3 API. Our advice is that new
-applications should not be using BOB, and that the
+applications should not be using BOB, and that the applications using BOB(Both
+of them) should consider migrating to SAM.
 
 SAM Version 1, 2
 ----------------

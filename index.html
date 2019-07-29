@@ -42,7 +42,7 @@
 <h2 id="i2cp">I2CP</h2>
 <p>I2CP is the core I2P API, it underlies many of the other I2P API's. It is also the most complex to use outside of Java, but recently several libraries have emerged that provide partial or full I2CP functionality from other languages. C, Java, and Javascript libraries are available, as is one Go library with partial support.</p>
 <h2 id="bob">BOB</h2>
-<p>BOB is a less complicated to use API, but it is currently unmaintained. We don't plan on dropping it soon, but we also have not been adding the new features that are available in SAM Version 3. Many of the best ideas from the BOB API have been ported to the more modern SAMv3 API. Our advice is that new applications should not be using BOB, and that the</p>
+<p>BOB is a less complicated to use API, but it is currently unmaintained. We don't plan on dropping it soon, but we also have not been adding the new features that are available in SAM Version 3. Many of the best ideas from the BOB API have been ported to the more modern SAMv3 API. Our advice is that new applications should not be using BOB, and that the applications using BOB(Both of them) should consider migrating to SAM.</p>
 <h2 id="sam-version-1-2">SAM Version 1, 2</h2>
 <p>Deprecated and for all intents and purposes removed.</p>
 <h2 id="i2pcontrol">I2PControl</h2>
@@ -105,6 +105,7 @@
 <p>Since there's a good chance your SAM Application is in a non-Java, non-JVM language, it may be difficult or impossible to build as a plugin for the I2P router. If that's the case, then we can't <em>assume</em> a router is there.</p>
 <p>Since this is a Windows machine, we can't <em>assume</em> that a package manager is available with a viable I2P router to install. If that's the case, we'll have to install our own.</p>
 <h3 id="kicking-off-a-child-installer-with-nsis">Kicking off a child installer with NSIS</h3>
+<p>One common way of creating a Windows installer for an application is to use Nullsoft Scriptable Install System. NSIS has the ability to do two essential things. First, it can check for the existence of the file, and second, it can start a new Windows application, and that application can be the I2P installer package.</p>
 <pre class="sourceCode NSIS"><code>Section &quot;GetI2P&quot;
   SetOutPath $INSTDIR
     IfFileExists &quot;$PROGRAMFILES\i2p\i2p.exe&quot; endGetI2P beginGetI2P
@@ -121,13 +122,20 @@
     File &quot;clients.config&quot;
   endGetI2P:
 SectionEnd</code></pre>
+<p>As you can see, after the i2pinstaller.exe is done running, a clients.config file is copied to the I2P application data directory. We can <strong>ONLY</strong> do it in this case because we already determines that I2P was not installed.</p>
 <h3 id="wait-how-can-i-make-sure-the-router-i-am-bundling-is-current">Wait, how can I make sure the router I am bundling is current?</h3>
 <p>Well here's how I once did it in a Makefile:</p>
-<pre class="sourceCode Make"><code>geti2p: i2pinstaller.exe
+<pre class="sourceCode Make"><code># geti2p is an alias for i2pinstaller.exe
+geti2p: i2pinstaller.exe
 
+# This downloads the I2P installer using the url composed by the &#39;make url&#39;
+# target.
 i2pinstaller.exe: url
     wget -c `cat geti2p.url` -O i2pinstaller.exe
 
+# This fetches an RDF listing of I2P versions from launchpad and looks for
+# the most recent stable version. Using this information, it then constructs
+# a URL to download the Windows I2P router installer from Launchpad.
 url:
     echo -n &#39;https://launchpad.net&#39; | tee .geti2p.url
     curl -s https://launchpad.net/i2p/trunk/+rdf | \
@@ -146,23 +154,20 @@ url:
     echo &#39;_windows.exe&#39; | tee -a .geti2p.url
     cat .geti2p.url | tr -d &#39;\n&#39; | tee geti2p.url
     rm -f .geti2p.url</code></pre>
-<h3 id="wait-what-if-i-dont-want-to-make-my-clients-install-a-jvm">Wait, what if I don't want to make my clients install a JVM</h3>
+<h3 id="wait-what-if-i-dont-want-to-make-my-clients-install-a-jvm">Wait, what if I don't want to make my clients install a JVM?</h3>
 <p>Enter Jlink, i2pd TODO</p>
+<h3 id="wait-how-to-i-finally-make-sure-that-it-has-the-sam-api-enabled">Wait, how to I finally make sure that it has the SAM API enabled?</h3>
+<p>Use clients.config.d TODO</p>
 <div style="page-break-after: always;"></div>
 
+<h2 id="two-big-things-and-one-little-thing-that-sam-cant-do-and-how-to-easily-forget-about-them">Two big things, and one little thing, that SAM can't do and how to easily forget about them</h2>
+<h3 id="tell-you-that-an-i2p-router-is-running-when-sam-is-not-enabled">Tell you that an I2P router is running when SAM is not enabled</h3>
+<h3 id="adjust-the-i2p-routers-settings">Adjust the I2P Router's settings</h3>
+<h4 id="natively-use-an-outproxy">Natively use an outproxy</h4>
+<p>Outproxy is a concept primarily known to i2ptunnel, and with i2ptunnel, primarily known to the HTTP and SOCKS proxies. SAM doesn't consider outproxying at all on it's own. If you are using SAM and want to access the clear net, you may wish to use an additional anonymizer when handling clearnet traffic, or offer a &quot;Bridged&quot; mode which is not anonymous but which is useful for bringing content to anonymous users</p>
+<p>That said, since SAM connections can be used like their non-anonymous counterparts, it is actually very simple to use SAM to build an out-proxy. While this technique hasn't been used yet, and it would require careful considerations for the anonymity of the applications, there are cases where a SAM-based outproxy would be useful to incorporate into an application. One such application would be a peer-to-peer CDN which bridges I2P and clearnet content.</p>
 <div style="page-break-after: always;"></div>
 
+<h1 id="examples">Examples</h1>
 <div style="page-break-after: always;"></div>
 
-<h2 id="abstract">Abstract</h2>
-<p>The workshop provides an introduction to the ways an application can be made to work with the I2P Anonymous Peer-to-Peer network. Developers should learn that the use of anonymous P2P in their applications need not be that different than what they are already doing in non-anonymous Peer-to-Peer applications. It begins with an introduction to the I2P plugins system, showing how the existing plugins set themselves up to do communication over i2p and what's good and bad about each approach. Afterwards, we'll continue on to the programattically controlling I2P via its SAM and I2PControl API's. Finally, we'll take a dive into the SAMv3 API by starting a new library utilizing it in Lua and writing a simple application.</p>
-<p>We(The I2P Project) would also like to request a table for 4 in the main room for the duration of the conference so that we can hang a banner and have meetings with other users and organizations about incorporating I2P into their projects. <em>We would like this table even if the workshop proposal is rejected.</em> <em>Whitney advised us that this was the place to apply for table space.</em></p>
-<h2 id="intended-audience">Intended Audience</h2>
-<p>Developers of new and existing applications that make use of networked communications that may benefit from enhanced privacy.</p>
-<h2 id="presenter-biographics">Presenter Biographics</h2>
-<p>idk writes I2P applications and libraries and likes to point out all the cool things you actually can do with anonymous networks. He originated one SAM library and maintains two others, and tries to participate in pretty much all of them. idk also likes to make sure I2P noobs get the help they need on Reddit and blogs about I2P application development.</p>
-<p>I2P is a 17-year-old Open-Source project dedicated to enabling privacy and anonymity using advanced cryptography. It enables client-server applications, hidden services, and peer-to-peer applications to work anonymously and provides API's orientated toward application development in addition to browsing.</p>
-<h2 id="materials-provided">Materials provided</h2>
-<p>Each participant will be provided with a detailed handout which will provide a schedule of the workshop with references to additional resources relevant to each section. The full source code of the Lua library that will be developed will be publshed prior to Def Con to be used as a resource during the workshop. Practical activities will be distributed during the workshop to the participants to demonstrate the techniques that will be illustrated.</p>
-<h2 id="audiovisualcomputer-requirements">Audio/Visual/Computer Requirements</h2>
-<p>Participants are welcome, but not required, to follow along with the examples and practicum provided during the workshop. In order to do so, they will need a laptop with internet access and their choice of Lua interpreter installed. They should also have I2P routers installed, either I2P or i2pd will do, but if they do not wish to install a router, I will bring a machine which will expose the API's they need for testing purposes they can use while they are here. I will also need a way to display examples to the workshop participants, either a projector or a large television would be best.</p>

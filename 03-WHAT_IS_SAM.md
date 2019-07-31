@@ -49,6 +49,14 @@ purpose.
   that socket  will be done with I2P, whether it be an HTTP Client, a connection
   between bittorrent peers, or any other kind of Streaming communication.
 
+That all seems pretty complicated written out like that, but it's actually quite
+straightforward in practice and what you end up with is just a socket, and you
+can do whatever you would do with a regular socket. Applications that use
+sockets can usually simply substitute a regular socket for a SAM socket and it
+just works. Anything that builds on the socket can be made to build on a SAM
+socket, and anything that uses the SAM socketed alternative implementation can
+inherit I2P features.
+
 ### Make your Code Re-Usable!
 
 Because of the deliberate similarity to existing streaming and datagram
@@ -56,7 +64,7 @@ communications, every language makes it possible to reduce this process to one
 or two steps at sensible layers of abstraction. Starting from the most similar,
 like a Socket in Java, a connection in Javascript, or a net.Conn in Go. The
 actual thing will vary from language to language, but when creating a library,
-you should probably start soon.
+you should probably start with a whatever's closest to a Socket.
 
 Once you've done that, you've laid the foundation to alter the other network
 parts of your language. In many cases, it may be possible to forward a
@@ -71,7 +79,3 @@ Or you can literally just write your own i2ptunnel that you can embed in your
 existing application. I did that once. It works really well. I don't think we
 need a gazillion 'socat for I2P' out there but some would argue we didn't need
 a third so who am I to judge.
-
-### A Very Simple SAM Client
-
-TODO

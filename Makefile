@@ -36,6 +36,7 @@ rst: meta
 	torst 01-CURRENT_APIS.md | tee current_apis.rst
 	torst 02-WHY_AN_API.md | tee which_api.rst
 	torst 03-WHAT_IS_SAM.md | tee what_is_sam.rst
+	make susc
 	torst 04-BUNDLING.md | tee bundling_i2p.rst
 	torst 05-WHAT_SAM_CANT_DO.md | tee what_sam_cant_do.rst
 	torst 06-EXAMPLES.md | tee examples.rst
@@ -47,6 +48,11 @@ rst: meta
 		what_sam_cant_do.rst SPACER.rst \
 		examples.rst SPACER.rst > README.rst #\
 		#PROPOSAL.rst > README.rst
+
+susc:
+	cp $(GOPATH)/src/github.com/eyedeekay/susc/PRINTOUT.md 03-SUSC.md
+	echo "" | tee -a what_is_sam.rst
+	torst 03-SUSC.md | tee -a what_is_sam.rst
 
 README:
 	@echo "# defcon.prop" | tee README.md

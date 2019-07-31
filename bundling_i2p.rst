@@ -45,7 +45,8 @@ package.
 
 As you can see, after the i2pinstaller.exe is done running, a clients.config
 file is copied to the I2P application data directory. We can **ONLY** do it in
-this case because we already determines that I2P was not installed.
+this case because we already determines that I2P was not installed, and it is
+**ONLY** in this example in this way because 0.9.42 isn't out yet.
 
 Wait, how can I make sure the router I am bundling is current?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -83,6 +84,8 @@ Well here's how I once did it in a Makefile:
        echo '_windows.exe' | tee -a .geti2p.url
        cat .geti2p.url | tr -d '\n' | tee geti2p.url
        rm -f .geti2p.url
+
+As we move past 0.9.42,
 
 Wait, what if I don't want to make my clients install a JVM?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

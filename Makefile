@@ -53,3 +53,14 @@ README:
 	@echo "Def Con Workshop" | tee -a README.md
 	@echo "" | tee -a README.md
 	cat COVER.md PROPOSAL.md | tee -a README.md
+
+blogpost-meta:
+	@echo '.. meta::' | tee /media/longterm/desktop-Workspace/mtn/i2p.www/i2p2www/blog/2019/07/29/august-conferences.rst
+	@echo '    :title: August 2019 Conference Schedule' | tee -a /media/longterm/desktop-Workspace/mtn/i2p.www/i2p2www/blog/2019/07/29/august-conferences.rst
+	@echo '    :author: sadie' | tee -a /media/longterm/desktop-Workspace/mtn/i2p.www/i2p2www/blog/2019/07/29/august-conferences.rst
+	@echo '    :date: 2019-07-29' | tee -a /media/longterm/desktop-Workspace/mtn/i2p.www/i2p2www/blog/2019/07/29/august-conferences.rst
+	@echo '    :excerpt: I2P developers are attending multiple conferences this month' | tee -a /media/longterm/desktop-Workspace/mtn/i2p.www/i2p2www/blog/2019/07/29/august-conferences.rst
+	@echo '' | tee -a /media/longterm/desktop-Workspace/mtn/i2p.www/i2p2www/blog/2019/07/29/august-conferences.rst
+
+blogpost: blogpost-meta
+	torst blogpost-pre.md | tee -a /media/longterm/desktop-Workspace/mtn/i2p.www/i2p2www/blog/2019/07/29/august-conferences.rst

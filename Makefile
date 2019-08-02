@@ -34,25 +34,54 @@ rst: meta
 	torst 00-IMAGE.md | tee IMAGE.rst
 	torst PROPOSAL.md | tee PROPOSAL.rst
 	torst 01-CURRENT_APIS.md | tee current_apis.rst
+	torst 01-I2CP.md | tee i2cp.rst
+	torst 01-I2PTUNNEL.md | tee i2ptunnel.rst
+	torst 01-I2PCONTROL.md | tee i2pcontrol.rst
+	torst 01-SAM.md | tee sam.rst
 	torst 02-WHY_AN_API.md | tee which_api.rst
+	torst 02-NOTI2PTUNNEL.md | tee noti2ptunnel.rst
+	torst 02-BRIDGINGCONCERNS.md | tee bridge.rst
 	torst 03-WHAT_IS_SAM.md | tee what_is_sam.rst
-	make susc
+	torst 03-STAGES.md | tee sam_stages.rst
+	torst 03-HANDSHAKE.md | tee sam_handshake.rst
+	torst 03-CONNECTIONS.md | tee sam_connection.rst
+	torst 03-REUSE.md | tee sam_reuse.rst
 	torst 04-BUNDLING.md | tee bundling_i2p.rst
+	torst 04-INSTALLER.md | tee installer.rst
+	torst 04-OBTAIN.md | tee obtain.rst
+	torst 04-JLINK.md | tee jlink.rst
+	torst 04-CONFIG.md | tee config.rst
+	torst 04-EMBEDDING.md | tee embedding_i2p.rst
 	torst 05-WHAT_SAM_CANT_DO.md | tee what_sam_cant_do.rst
 	torst 06-EXAMPLES.md | tee examples.rst
+	make susc
 	cat IMAGE.rst COVER.rst \
 		current_apis.rst SPACER.rst \
+		i2cp.rst SPACER.rst \
+		i2ptunnel.rst SPACER.rst \
+		i2pcontrol.rst SPACER.rst \
+		sam.rst SPACER.rst \
 		which_api.rst SPACER.rst \
+		noti2ptunnel.rst SPACER.rst \
+		bridge.rst SPACER.rst \
 		what_is_sam.rst SPACER.rst \
+		sam_stages.rst SPACER.rst \
+		sam_handshake.rst SPACER.rst \
+		sam_connection.rst SPACER.rst \
+		sam_connection.rst SPACER.rst \
+		sam_reuse.rst SPACER.rst \
 		bundling_i2p.rst SPACER.rst \
+		installer.rst SPACER.rst \
+		obtain.rst SPACER.rst \
+		jlink.rst SPACER.rst \
+		config.rst SPACER.rst \
+		embedding_i2p.rst SPACER.rst \
 		what_sam_cant_do.rst SPACER.rst \
-		examples.rst SPACER.rst > README.rst #\
-		#PROPOSAL.rst > README.rst
+		examples.rst SPACER.rst > README.rst
 
 susc:
-	cp $(GOPATH)/src/github.com/eyedeekay/susc/PRINTOUT.md 03-SUSC.md
-	echo "" | tee -a what_is_sam.rst
-	torst 03-SUSC.md | tee -a what_is_sam.rst
+	cp $(GOPATH)/src/github.com/eyedeekay/susc/PRINTOUT.rst 03-SUSC.rst
+	cat 03-SUSC.rst SPACER.rst | tee -a examples.rst
 
 README:
 	@echo "# defcon.prop" | tee README.md

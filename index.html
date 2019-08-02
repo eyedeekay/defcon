@@ -3,7 +3,7 @@
 
 </div>
 <h1 id="workshop-title-i2p-for-application-developers">Workshop Title: I2P for Application Developers</h1>
-<h2 id="presenters">Presenters</h2>
+<h2 id="presenters-crypto-privacy-village">Presenters: Crypto-Privacy Village</h2>
 <ul>
 <li>idk</li>
 <li>I2P Application Developer</li>
@@ -12,9 +12,17 @@
 <li><a href="https://github.com/eyedeekay" class="uri">https://github.com/eyedeekay</a></li>
 <li><a href="https://reddit.com/u/alreadyburnt" class="uri">https://reddit.com/u/alreadyburnt</a></li>
 </ul>
+<h2 id="presenters-monero-village">Presenters: Monero Village</h2>
+<ul>
+<li>zzz</li>
+<li>I2P Developer</li>
+<li>Location Obfuscation is a pretty big part of the point</li>
+<li><a href="mailto:zzz@mail.i2p">zzz@mail.i2p</a></li>
+<li><a href="http://zzz.i2p" class="uri">http://zzz.i2p</a></li>
+</ul>
 <div style="page-break-after: always;"></div>
 
-<h1 id="current-and-former-i2p-apis">Current and Former I2P API's</h1>
+<h1 id="current-i2p-apis">Current I2P API's</h1>
 <pre><code>I2P Network
     +   +
     |   |
@@ -28,319 +36,141 @@
  =-+---+-=            =------------=
    |   |
  =-+---|-------=
- | |Str|eaming |
- =-|---+-------=
-   |   |
-   | =-+------=    =-------------------=
-   | | SAM v3 +----+  SAM APPLICATIONS |
-   | =--------=    =-------------------=
-   |
- =-+-----=      =-------------------=
- | BOB   +------+  BOB APPLICATIONS |
- =-------=      =-------------------=</code></pre>
+ |  Str|eaming |
+ =-----+-------=
+       |
+     =-+------=    =-------------------=
+     | SAM v3 +----+  SAM APPLICATIONS |
+     =--------=    =-------------------=</code></pre>
 <p>A sketch of the I2P API's, their relationship to eachother, and their relationship to the router.</p>
-<h2 id="i2cp">I2CP</h2>
+
+<div style="page-break-after: always;"></div>
+
+<h2 id="i2cp"><a href="https://geti2p.net/en/docs/protocol/i2cp">I2CP</a></h2>
 <p>I2CP is the core I2P API, it underlies many of the other I2P API's. It is also the most complex to use outside of Java, but recently several libraries have emerged that provide partial or full I2CP functionality from other languages. C, Java, and Javascript libraries are available, as is one Go library with partial support.</p>
-<h2 id="bob">BOB</h2>
-<p>BOB is a less complicated to use API, but it is currently unmaintained. We don't plan on dropping it soon, but we also have not been adding the new features that are available in SAM Version 3. Many of the best ideas from the BOB API have been ported to the more modern SAMv3 API. Our advice is that new applications should not be using BOB, and that the applications using BOB(Both of them) should consider migrating to SAM.</p>
-<h2 id="sam-version-1-2">SAM Version 1, 2</h2>
-<p>Deprecated and for all intents and purposes removed.</p>
-<h2 id="i2pcontrol">I2PControl</h2>
+<ul>
+<li><a href="https://geti2p.net/en/docs/protocol/i2cp" class="uri">https://geti2p.net/en/docs/protocol/i2cp</a></li>
+<li><a href="https://geti2p.net/spec/i2cp" class="uri">https://geti2p.net/spec/i2cp</a></li>
+</ul>
+
+<div style="page-break-after: always;"></div>
+
+<h2 id="i2ptunnel"><a href="https://geti2p.net/en/docs/api/i2ptunnel">I2PTunnel</a></h2>
+<p>Java applications can also embed their own instances of I2PTunnel in order to use it to set up I2P tunnels. However, even non-java applications can take advantage of drop-in configuration of I2Ptunnel via i2ptunnel.config.d in the Java i2p router, or tunnels.conf.d in the C++ i2P router. In this way, regular clear-web applications can provide alternate configurations that automatically configure their I2P tunnels. If you ship i2ptunnel.config.d files, then any application can be turned into an I2P application without necessarily requiring any modification to the application's code.</p>
+<ul>
+<li><a href="https://geti2p.net/en/docs/api/i2ptunnel" class="uri">https://geti2p.net/en/docs/api/i2ptunnel</a></li>
+</ul>
+
+<div style="page-break-after: always;"></div>
+
+<h2 id="i2pcontrol"><a href="https://geti2p.net/en/docs/api/i2pcontrol">I2PControl</a></h2>
 <p>I2PControl is a little different. Rather than setting up connections between I2P applications, it's used for configuring and retrieving information about the router programmatically.</p>
-<h2 id="sam-version-3">SAM Version 3</h2>
+<ul>
+<li><a href="https://geti2p.net/en/docs/api/i2pcontrol" class="uri">https://geti2p.net/en/docs/api/i2pcontrol</a></li>
+</ul>
+
+<div style="page-break-after: always;"></div>
+
+<h2 id="sam-version-3"><a href="https://geti2p.net/en/docs/api/samv3">SAM Version 3</a></h2>
 <p>The current recommended API for applications of all types to communicate via I2P is the SAMv3 API. It provides a convenient way to set up, communicate through, and tear down I2P connections. It is designed so that it can implement the API familiar to your programming language in a simple and straightforward way. For example, we can implement a Socket in Java or a net.Conn in Go.</p>
 <p>SAM will by and large be the focus of this workshop.</p>
+<ul>
+<li><a href="https://geti2p.net/en/docs/api/samv3" class="uri">https://geti2p.net/en/docs/api/samv3</a></li>
+</ul>
+
 <div style="page-break-after: always;"></div>
 
 <h2 id="which-api-do-you-need">Which API do You Need?</h2>
 <p>If you need to make connections between applications automatically, then you need the <strong>SAMv3 API</strong>.</p>
 <p>If you need to monitor or adjust the I2P router's connection, bandwidth usage, or change it's status, then you need the <strong>I2PControl API</strong>.</p>
+<p>If you need to set up tunnels for an already-existing Web Application, then I2Ptunnel, either by embedding it in your application or by placing files into i2ptunnel.config.d.</p>
 <p>If you need to simply check the presence of an I2P router before making connections, one way is to make a quick connection to the <strong>I2CP API</strong>. If you're writing a Java application, the I2CP API may also be a good choice. Besides that, unless you know why you need to use I2CP, you probably just need SAM.</p>
-<h3 id="but-why-not-just-set-up-i2ptunnel">But Why Not Just Set Up I2PTunnel?</h3>
+
+<div style="page-break-after: always;"></div>
+
+<h3 id="but-why-not-just-tell-users-to-set-up-i2ptunnel-via-the-existing-webui">But Why Not Just Tell Users to Set Up I2PTunnel via the existing WebUI?</h3>
 <p>I2Ptunnel is good at forwarding existing services to I2P, and it can concievably be used for many applications. It does provide a SOCKS proxy after all. However, setting up i2ptunnels is an involved process, with lots of settings that are intimidating to your users. Using SAM, you set up the connections and apply all the options inside the application itself, <strong>giving you the all-important</strong> <strong>oppourtunity to set up sane defaults</strong> on behalf of your users.</p>
 <p>A good example can be found in applications that are federated with Activitypub. While I2Ptunnel is perfectly capable of making AP applications available over I2P, not many new users will correctly configure the AP-based service correctly on their first try. The process of setting up connections, deciding whether or not to &quot;Bridge&quot; clearnet connections or remain strictly anonymous, deciding tunnel length and the number of tunnels in your destination &quot;Pool,&quot; and most other I2P connection-related functions.</p>
+
+<div style="page-break-after: always;"></div>
+
+<h2 id="what-else-do-you-need-to-think-about">What else do you need to think about?</h2>
+<p>Are you primarily:</p>
+<ul>
+<li>Publishing information or recieving it?</li>
+<li>Do you need ordered, Streaming-style communications</li>
+<li>Do you need unordered or semi-reliable Datagram-style communication</li>
+<li>Do you do peer discovery? How do you do peer discovery?</li>
+<li>When you do peer discovery, do you need to trust a service?</li>
+<li>Do you need to bootstrap off of a DHT?</li>
+<li>Do you want clients to be able to boostrap off of eachother?</li>
+<li>Do you want to also connect to clearnet clients?</li>
+<li>Do you need to be anonymous in mixed clearnet/I2P mode?</li>
+<li>Do you need to send datagrams in mixed clearnet/I2P mode?</li>
+<li>Do you want to allow people to bridge anonymous and non-anonymous clients?</li>
+</ul>
+
 <div style="page-break-after: always;"></div>
 
 <h2 id="what-is-sam">What is SAM</h2>
 <p>SAM is a simple API for controlling <strong>connections</strong> on the I2P i2p router in a way which is familiar to people who write internet applications. To use it, you simply set up a SAM connection and then use it like a streaming connection or to send datagrams, either with or without a repliable address. You can use these connections just like their TCP/IP equivalents for basically every intent or purpose.</p>
+
+<div style="page-break-after: always;"></div>
+
 <h3 id="stages-of-the-sam-setup-process">Stages of the SAM Setup process</h3>
 <ol type="1">
 <li>Handshake</li>
+<li>Session Establishment</li>
+<li>Communication</li>
 </ol>
+
+<div style="page-break-after: always;"></div>
+
+<h3 id="handshake">Handshake</h3>
 <ul>
 <li>This is done so that you can negotiate the features of your SAM client with the SAM service.</li>
 <li>First, establish a socket connection to the I2P router's SAM Port.</li>
 <li>From the client, it's a simple &quot;HELLO&quot; message which can contain optional version and authentication information.</li>
 <li>When the server replies, it will respond with OK and the maximum supported SAM version.</li>
 </ul>
-<ol start="2" type="1">
-<li>Session Establishment</li>
-</ol>
-<ul>
-<li>Once your handshake is complete, you need to establish a session with SAM to control connections.</li>
-<li>To create a session, you send a &quot;SESSION CREATE&quot; message which must declare the type of connection and messaging you will be doing, a unique name for the connection which will allow you to refer to the client, and either a full public/private base64-encoded key pair for the local tunnel or TRANSIENT for a tunnel created with a new keypair for this session.</li>
-<li>Optionally, it can specify a signature type. From now on, it is recommended that libraries supporting SAM 3.1 or greater use ed25519 signatures by default.</li>
-<li>When the SAM service replies, it will return a result of either OK indicating that the session was established successfully or a string indicating the type of error that was encountered. If the session was established successfully, the reply will also include the destination keypair or the newly established session.</li>
-</ul>
-<ol start="3" type="1">
-<li>Connections/Messaging</li>
-</ol>
+
+<div style="page-break-after: always;"></div>
+
+<h3 id="connectionsmessaging">Connections/Messaging</h3>
 <ul>
 <li>Now that you've established a session, you can start making connections and/or sending messages.</li>
 <li>Streaming connections are bi-directional, and can either be connected as a client to a server or listened upon to accept connections as a server to a client. Predictably, the commands you send to the SAM bridge to set up each kind of connection is &quot;STREAM CONNECT&quot; for connections and &quot;STREAM ACCEPT&quot; for listeners.</li>
 <li>Datagrams can be sent after a datagram style session has been established by sending datagrams to the socket. They can be repliable and include a return address or raw and not include a return address.</li>
 <li>Once you have created a Streaming connection, any further communication on that socket will be done with I2P, whether it be an HTTP Client, a connection between bittorrent peers, or any other kind of Streaming communication.</li>
 </ul>
-<p>That all seems pretty complicated written out like that, but it's actually quite straightforward in practice and what you end up with is just a socket, and you can do whatever you would do with a regular socket. Applications that use sockets can usually simply substitute a regular socket for a SAM socket and it just works. Anything that builds on the socket can be made to build on a SAM socket, and anything that uses the SAM socketed alternative implementation can inherit I2P features.</p>
+
+<div style="page-break-after: always;"></div>
+
+<h3 id="connectionsmessaging-1">Connections/Messaging</h3>
+<ul>
+<li>Now that you've established a session, you can start making connections and/or sending messages.</li>
+<li>Streaming connections are bi-directional, and can either be connected as a client to a server or listened upon to accept connections as a server to a client. Predictably, the commands you send to the SAM bridge to set up each kind of connection is &quot;STREAM CONNECT&quot; for connections and &quot;STREAM ACCEPT&quot; for listeners.</li>
+<li>Datagrams can be sent after a datagram style session has been established by sending datagrams to the socket. They can be repliable and include a return address or raw and not include a return address.</li>
+<li>Once you have created a Streaming connection, any further communication on that socket will be done with I2P, whether it be an HTTP Client, a connection between bittorrent peers, or any other kind of Streaming communication.</li>
+</ul>
+
+<div style="page-break-after: always;"></div>
+
 <h3 id="make-your-code-re-usable">Make your Code Re-Usable!</h3>
 <p>Because of the deliberate similarity to existing streaming and datagram communications, every language makes it possible to reduce this process to one or two steps at sensible layers of abstraction. Starting from the most similar, like a Socket in Java, a connection in Javascript, or a net.Conn in Go. The actual thing will vary from language to language, but when creating a library, you should probably start with a whatever's closest to a Socket.</p>
 <p>Once you've done that, you've laid the foundation to alter the other network parts of your language. In many cases, it may be possible to forward a connection using the code you've already written, or to replace an underlying structure with your SAM-enabled version.</p>
 <p>In a surprisingly short amount of time, you too can develop extensive tooling that makes building new I2P applications and, more importantly, adapting your existing applications to use I2P simple, reliable, and familiar.</p>
 <p>Or you can literally just write your own i2ptunnel that you can embed in your existing application. I did that once. It works really well. I don't think we need a gazillion 'socat for I2P' out there but some would argue we didn't need a third so who am I to judge.</p>
-<h1 id="susc">susc</h1>
-<p>Simplest Useful SAM Streaming Client.</p>
-<p>This isn't intended to be very &quot;good&quot; right now, but rather to illustrate the simplest ways the concepts of SAM map onto it's clearnet equivalents. It's been created as a set of examples for Def Con 27. When it's done being a basic example it might become a socket library, but probably not. sam3 is better.</p>
-<h4 id="acceptgo">accept.go</h4>
-<pre><code>package susc
 
-import (
-    &quot;fmt&quot;
-)
-
-// StreamAccept asks SAM to accept a TCP-Like connection
-func (c *Client) StreamAccept(id int32) (*Reply, error) {
-    r, err := c.Command(&quot;STREAM ACCEPT ID=%d SILENT=false\n&quot;, id)
-    if err != nil {
-        return nil, err
-    }
-
-    // TODO: move check into Command()
-    if r.Topic != &quot;STREAM&quot; || r.Type != &quot;STATUS&quot; {
-        return nil, fmt.Errorf(&quot;Unknown Reply: %+v\n&quot;, r)
-    }
-
-    result := r.Pairs[&quot;RESULT&quot;]
-    if result != &quot;OK&quot; {
-        return nil, fmt.Errorf(&quot;Reply Error&quot;)
-    }
-
-    return r, nil
-}</code></pre>
-<h4 id="clientgo">client.go</h4>
-<pre><code>package susc
-
-import (
-    &quot;net&quot;
-        &quot;encoding/binary&quot;
-        &quot;encoding/base32&quot;
-    &quot;encoding/base64&quot;
-)
-
-type Client struct {
-    *net.TCPConn
-}
-
-var (
-    i2pB64enc *base64.Encoding = base64.NewEncoding(&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~&quot;)
-    i2pB32enc *base32.Encoding = base32.NewEncoding(&quot;abcdefghijklmnopqrstuvwxyz234567&quot;)
-)
-
-func NewClient() (*Client, error) {
-    //var err error
-    var c Client
-    samaddr, err := net.ResolveTCPAddr(&quot;tcp&quot;, &quot;127.0.0.1:7656&quot;)
-    if err != nil {
-        return nil, err
-    }
-    c.TCPConn, err = net.DialTCP(&quot;tcp&quot;, nil, samaddr)
-    if err != nil {
-        return nil, err
-    }
-    return &amp;c, nil
-}
-
-
-// Base64 returns the base64 of the local tunnel
-func Base64(destination string) string {
-    if destination != &quot;&quot; {
-        s, _ := i2pB64enc.DecodeString(destination)
-        alen := binary.BigEndian.Uint16(s[385:387])
-        return i2pB64enc.EncodeToString(s[:387+alen])
-    }
-    return &quot;&quot;
-}</code></pre>
-<h4 id="commandgo">command.go</h4>
-<pre><code>package susc
-
-import (
-    &quot;bufio&quot;
-    &quot;fmt&quot;
-)
-
-// Command is a helper to send one command and return the reply as a string
-func (c *Client) Command(str string, args ...interface{}) (*Reply, error) {
-    if _, err := fmt.Fprintf(c.TCPConn, str, args...); err != nil {
-        return nil, err
-    }
-    reader := bufio.NewReader(c.TCPConn)
-    line, _, err := reader.ReadLine()
-    if err != nil {
-        return nil, err
-    }
-
-    return ParseReply(string(line))
-}</code></pre>
-<h4 id="connectgo">connect.go</h4>
-<pre><code>package susc
-
-import (
-    &quot;fmt&quot;
-)
-
-// StreamTCPConnect asks SAM for a TCP-Like connection to dest, has to be called on a new Client
-func (c *Client) StreamTCPConnect(id int32, dest string) error {
-    r, err := c.Command(&quot;STREAM CONNECT ID=%d DESTINATION=%s\n&quot;, id, dest)
-    if err != nil {
-        return err
-    }
-
-    // TODO: move check into Command()
-    if r.Topic != &quot;STREAM&quot; || r.Type != &quot;STATUS&quot; {
-        return fmt.Errorf(&quot;Unknown Reply: %+v\n&quot;, r)
-    }
-
-    result := r.Pairs[&quot;RESULT&quot;]
-    if result != &quot;OK&quot; {
-        return fmt.Errorf(&quot;Reply Error&quot;)
-    }
-
-    return nil
-}</code></pre>
-<h4 id="hellogo">hello.go</h4>
-<pre><code>package susc
-
-import (
-    &quot;fmt&quot;
-)
-
-func (c *Client) Hello() error {
-    r, err := c.Command(&quot;HELLO VERSION MIN=3.0 MAX=3.2\n&quot;)
-    if err != nil {
-        return err
-    }
-
-    if r.Topic != &quot;HELLO&quot; {
-        return fmt.Errorf(&quot;Unknown Reply: %+v\n&quot;, r)
-    }
-
-    if r.Pairs[&quot;RESULT&quot;] != &quot;OK&quot; {
-        return fmt.Errorf(&quot;Handshake did not succeed\nReply:%+v\n&quot;, r)
-    }
-
-    return nil
-}</code></pre>
-<h4 id="readgo">read.go</h4>
-<pre><code>package susc
-
-import (
-    &quot;bufio&quot;
-)
-
-func (c *Client) ReadLine() (string, error) {
-    reader := bufio.NewReader(c.TCPConn)
-    bytes, _, err := reader.ReadLine()
-    if err != nil {
-        return &quot;&quot;, err
-    }
-    return string(bytes), nil
-}</code></pre>
-<h4 id="replygo">reply.go</h4>
-<pre><code>package susc
-
-import (
-    &quot;fmt&quot;
-    &quot;strings&quot;
-)
-
-type Reply struct {
-    Topic string
-    Type  string
-
-    Pairs map[string]string
-}
-
-func ParseReply(line string) (*Reply, error) {
-    line = strings.TrimSpace(line)
-    parts := strings.Split(line, &quot; &quot;)
-    if len(parts) &lt; 3 {
-        return nil, fmt.Errorf(&quot;Malformed Reply.\n%s\n&quot;, line)
-    }
-
-    r := &amp;Reply{
-        Topic: parts[0],
-        Type:  parts[1],
-        Pairs: make(map[string]string, len(parts)-2),
-    }
-
-    for _, v := range parts[2:] {
-        kvPair := strings.SplitN(v, &quot;=&quot;, 2)
-        if kvPair != nil {
-            if len(kvPair) != 2 {
-                return nil, fmt.Errorf(&quot;Malformed key-value-pair.\n%s\n&quot;, kvPair)
-            }
-        }
-
-        r.Pairs[kvPair[0]] = kvPair[len(kvPair)-1]
-    }
-
-    return r, nil
-}</code></pre>
-<h4 id="sessiongo">session.go</h4>
-<pre><code>package susc
-
-import (
-    &quot;fmt&quot;
-)
-
-func (c *Client) CreateStreamSession(id int32, dest, sigtype, options string) (string, error) {
-    if dest == &quot;&quot; {
-        dest = &quot;TRANSIENT&quot;
-    }
-    r, err := c.Command(
-        &quot;SESSION CREATE STYLE=STREAM ID=%d DESTINATION=%s %s %s\n&quot;,
-        id,
-        dest,
-        sigtype,
-        options,
-    )
-    if err != nil {
-        return &quot;&quot;, err
-    }
-
-    // TODO: move check into Command()
-    if r.Topic != &quot;SESSION&quot; || r.Type != &quot;STATUS&quot; {
-        return &quot;&quot;, fmt.Errorf(&quot;Unknown Reply: %+v\n&quot;, r)
-    }
-
-    result := r.Pairs[&quot;RESULT&quot;]
-    if result != &quot;OK&quot; {
-        return &quot;&quot;, fmt.Errorf(&quot;Reply error&quot;)
-    }
-    return r.Pairs[&quot;DESTINATION&quot;], nil
-}</code></pre>
-<h4 id="writego">write.go</h4>
-<pre><code>package susc
-
-// Write implements the TCPConn Write method.
-func (c *Client) Write(b []byte) (int, error) {
-    return c.TCPConn.Write(b)
-}</code></pre>
 <div style="page-break-after: always;"></div>
 
 <h2 id="bundling-an-i2p-router-with-your-sam-application">Bundling an I2P Router with your SAM Application</h2>
 <p>Sometimes, the details of setting up your SAM application require you to know whether an I2P router is present and ready to accept SAM connections or not. As of release 0.9.42 in a few weeks, this becomes a very easy problem to solve. Let's take a slightly complicated case as an example, a non-JVM, non-plugin application for Windows.</p>
 <p>Since there's a good chance your SAM Application is in a non-Java, non-JVM language, it may be difficult or impossible to build as a plugin for the I2P router. If that's the case, then we can't <em>assume</em> a router is there.</p>
 <p>Since this is a Windows machine, we can't <em>assume</em> that a package manager is available with a viable I2P router to install. If that's the case, we'll have to install our own.</p>
+
+<div style="page-break-after: always;"></div>
+
 <h3 id="kicking-off-a-child-installer-with-nsis">Kicking off a child installer with NSIS</h3>
 <p>One common way of creating a Windows installer for an application is to use Nullsoft Scriptable Install System. NSIS has the ability to do two essential things. First, it can check for the existence of the file, and second, it can start a new Windows application, and that application can be the I2P installer package.</p>
 <pre class="sourceCode NSIS"><code>Section &quot;GetI2P&quot;
@@ -360,6 +190,9 @@ func (c *Client) Write(b []byte) (int, error) {
   endGetI2P:
 SectionEnd</code></pre>
 <p>As you can see, after the i2pinstaller.exe is done running, a clients.config file is copied to the I2P application data directory. We can <strong>ONLY</strong> do it in this case because we already determines that I2P was not installed, and it is <strong>ONLY</strong> in this example in this way because 0.9.42 isn't out yet.</p>
+
+<div style="page-break-after: always;"></div>
+
 <h3 id="wait-how-can-i-make-sure-the-router-i-am-bundling-is-current">Wait, how can I make sure the router I am bundling is current?</h3>
 <p>Well here's how I once did it in a Makefile:</p>
 <pre class="sourceCode Make"><code># geti2p is an alias for i2pinstaller.exe
@@ -391,21 +224,219 @@ url:
     echo &#39;_windows.exe&#39; | tee -a .geti2p.url
     cat .geti2p.url | tr -d &#39;\n&#39; | tee geti2p.url
     rm -f .geti2p.url</code></pre>
-<p>As we move past 0.9.42,</p>
-<h3 id="wait-what-if-i-dont-want-to-make-my-clients-install-a-jvm">Wait, what if I don't want to make my clients install a JVM?</h3>
-<p>Enter Jlink, i2pd TODO</p>
-<h3 id="wait-how-to-i-finally-make-sure-that-it-has-the-sam-api-enabled">Wait, how to I finally make sure that it has the SAM API enabled?</h3>
-<p>Use clients.config.d TODO</p>
+
 <div style="page-break-after: always;"></div>
 
-<h2 id="two-big-things-and-one-little-thing-that-sam-cant-do-and-how-to-easily-forget-about-them">Two big things, and one little thing, that SAM can't do and how to easily forget about them</h2>
+<h3 id="wait-what-if-i-dont-want-to-make-my-clients-install-a-jvm">Wait, what if I don't want to make my clients install a JVM?</h3>
+<p>Two projects at least have been working on using the 'Jlink' tool to produce an I2P router that does not require the use of a JVM, those include i2p-zero from the Monero project and the Zero-Dependency installer from the I2P project. These may be preferable choices if you are bundling a router to use with a non-java application and are averse to requiring your users to install a JVM.</p>
+
+<div style="page-break-after: always;"></div>
+
+<h3 id="wait-how-to-i-finally-make-sure-that-it-has-the-sam-api-enabled">Wait, how to I finally make sure that it has the SAM API enabled?</h3>
+<p>Now that we're sure an I2P router is installed, we need to make sure that a SAM API is available to your application to use. Since 0.9.42, all platforms that use SAM can also use clients.config.d. That way, you can drop a file in to an I2P router you have just installed or one that exists on the computer already, without needing to worry about over-writing or otherwise harmfully altering a potentially sensitive configuation file.</p>
+
+<div style="page-break-after: always;"></div>
+
+<h3 id="embedding-an-i2p-router-in-your-java-application">Embedding an I2P Router in your Java Application</h3>
+<p>Not quite done with this one yet. For now, the link.</p>
+<p><a href="http://i2p-projekt.i2p/en/docs/applications/embedding" class="uri">http://i2p-projekt.i2p/en/docs/applications/embedding</a></p>
+
+<div style="page-break-after: always;"></div>
+
+<h2 id="two-big-things-that-sam-cant-do-and-how-to-easily-forget-about-them">Two big things that SAM can't do and how to easily forget about them</h2>
 <h3 id="tell-you-that-an-i2p-router-is-running-when-sam-is-not-enabled">Tell you that an I2P router is running when SAM is not enabled</h3>
+<p>To do this effectively, you need to check for the existence of an I2CP port, but you don't need to actually use I2CP for anything else.</p>
 <h3 id="adjust-the-i2p-routers-settings">Adjust the I2P Router's settings</h3>
-<h4 id="natively-use-an-outproxy">Natively use an outproxy</h4>
-<p>Outproxy is a concept primarily known to i2ptunnel, and with i2ptunnel, primarily known to the HTTP and SOCKS proxies. SAM doesn't consider outproxying at all on it's own. If you are using SAM and want to access the clear net, you may wish to use an additional anonymizer when handling clearnet traffic, or offer a &quot;Bridged&quot; mode which is not anonymous but which is useful for bringing content to anonymous users</p>
-<p>That said, since SAM connections can be used like their non-anonymous counterparts, it is actually very simple to use SAM to build an out-proxy. While this technique hasn't been used yet, and it would require careful considerations for the anonymity of the applications, there are cases where a SAM-based outproxy would be useful to incorporate into an application. One such application would be a peer-to-peer CDN which bridges I2P and clearnet content.</p>
+<p>To do this, you need to use i2pcontrol.</p>
+
 <div style="page-break-after: always;"></div>
 
 <h1 id="examples">Examples</h1>
+<h1 id="susc">susc</h1>
+<p>Simplest Useful SAM Streaming Client.</p>
+<p>This isn't intended to be very &quot;good&quot; right now, but rather to illustrate the simplest ways the concepts of SAM map onto it's clearnet equivalents. It's been created as a set of examples for Def Con 27. When it's done being a basic example it might become a socket library, but probably not. sam3 is better.</p>
+<h2 id="a-simple-tcp-client">A simple TCP client</h2>
+<pre><code>package susc
+import (
+    &quot;encoding/base32&quot;
+    &quot;encoding/base64&quot;
+    &quot;encoding/binary&quot;
+    &quot;net&quot;
+)
+// Client: A SAM Client is just a socket once it&#39;s set up.
+type Client struct {
+    *net.TCPConn
+}
+// I2P uses a slightly altered base64 alphabet. You will need to customize your
+// encoder to use it.
+var (
+    i2pB64enc *base64.Encoding = base64.NewEncoding(&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~&quot;)
+    i2pB32enc *base32.Encoding = base32.NewEncoding(&quot;abcdefghijklmnopqrstuvwxyz234567&quot;)
+)
+// NewClient: To create a new client, create a TCP Connection to a SAM Service.
+func NewClient() (*Client, error) {
+    //var err error
+    var c Client
+    // The default SAM address is localhost:7656
+    samaddr, err := net.ResolveTCPAddr(&quot;tcp&quot;, &quot;127.0.0.1:7656&quot;)
+    if err != nil {
+        return nil, err
+    }
+    // When you create your client, establish your connection to SAM.
+    c.TCPConn, err = net.DialTCP(&quot;tcp&quot;, nil, samaddr)
+    if err != nil {
+        return nil, err
+    }
+    return &amp;c, nil
+}
+// Base64 returns the base64 destination of the tunnel from the full destination.
+// It&#39;s very helpful for SAM libraries to include a function like this even
+// though it&#39;s not part of the spec
+func Base64(destination string) string {
+    if destination != &quot;&quot; {
+        // Decode the base64 string to it&#39;s binary form
+        s, _ := i2pB64enc.DecodeString(destination)
+        // Take the length bits from the binary representation
+        alen := binary.BigEndian.Uint16(s[385:387])
+        // take the first 387 bits, + the length reported by the length bits,
+        // from the binary representation and re-encode it to base64.
+        return i2pB64enc.EncodeToString(s[:387+alen])
+    }
+    return &quot;&quot;
+}</code></pre>
+<div style="page-break-after: always;"></div>
+
+<h2 id="a-function-to-send-commands">A function to send commands</h2>
+<pre><code>package susc
+import (
+    &quot;bufio&quot;
+    &quot;fmt&quot;
+)
+// Command is a helper to send one command and return the reply as a string
+func (c *Client) Command(str string, args ...interface{}) (*Reply, error) {
+    if _, err := fmt.Fprintf(c.TCPConn, str, args...); err != nil {
+        return nil, err
+    }
+    reader := bufio.NewReader(c.TCPConn)
+    line, _, err := reader.ReadLine()
+    if err != nil {
+        return nil, err
+    }
+    return ParseReply(string(line))
+}</code></pre>
+<div style="page-break-after: always;"></div>
+
+<h2 id="a-reply-parser">A reply parser</h2>
+<pre><code>package susc
+import (
+    &quot;fmt&quot;
+    &quot;strings&quot;
+)
+// Reply is a structure that represents a reply to the SAM bridge for
+// convenience sake
+type Reply struct {
+    Topic string
+    Type  string
+    Pairs map[string]string
+}
+// ParseReply takes a string reply from the SAM bridge and turns it into a Reply
+// object for later use.
+func ParseReply(line string) (*Reply, error) {
+    line = strings.TrimSpace(line)
+    parts := strings.Split(line, &quot; &quot;)
+    if len(parts) &lt; 3 {
+        return nil, fmt.Errorf(&quot;Malformed Reply.\n%s\n&quot;, line)
+    }
+    r := &amp;Reply{
+        Topic: parts[0],
+        Type:  parts[1],
+        Pairs: make(map[string]string, len(parts)-2),
+    }
+    for _, v := range parts[2:] {
+        kvPair := strings.SplitN(v, &quot;=&quot;, 2)
+        if kvPair != nil {
+            if len(kvPair) != 2 {
+                return nil, fmt.Errorf(&quot;Malformed key-value-pair.\n%s\n&quot;, kvPair)
+            }
+        }
+        r.Pairs[kvPair[0]] = kvPair[len(kvPair)-1]
+    }
+    return r, nil
+}</code></pre>
+<div style="page-break-after: always;"></div>
+
+<h2 id="do-the-handshake">Do the handshake</h2>
+<pre><code>package susc
+import (
+    &quot;fmt&quot;
+)
+// Hello does the handshake with the SAM bridge
+func (c *Client) Hello() error {
+    reply, err := c.Command(&quot;HELLO VERSION MIN=3.0 MAX=3.2\n&quot;)
+    if err != nil {
+        return err
+    }
+    if reply.Topic != &quot;HELLO&quot; {
+        return fmt.Errorf(&quot;Unknown Reply: %+v\n&quot;, r)
+    }
+    if reply.Pairs[&quot;RESULT&quot;] != &quot;OK&quot; {
+        return fmt.Errorf(&quot;Handshake did not succeed\nReply:%+v\n&quot;, r)
+    }
+    return nil
+}</code></pre>
+<div style="page-break-after: always;"></div>
+
+<h2 id="establish-a-session">Establish a session</h2>
+<pre><code>package susc
+import (
+    &quot;fmt&quot;
+)
+// CreateStreamSession: finally creates a streaming session. You can now use
+// your socket.
+func (c *Client) CreateStreamSession(id int32, dest, sigtype, options string) (string, error) {
+    if dest == &quot;&quot; {
+        dest = &quot;TRANSIENT&quot;
+    }
+    r, err := c.Command(
+        &quot;SESSION CREATE STYLE=STREAM ID=%d DESTINATION=%s %s %s\n&quot;,
+        id,
+        dest,
+        sigtype,
+        options,
+    )
+    if err != nil {
+        return &quot;&quot;, err
+    }
+    result := r.Pairs[&quot;RESULT&quot;]
+    if result != &quot;OK&quot; {
+        return &quot;&quot;, fmt.Errorf(&quot;Reply error&quot;)
+    }
+    return r.Pairs[&quot;DESTINATION&quot;], nil
+}</code></pre>
+<div style="page-break-after: always;"></div>
+
+<h2 id="create-a-connection">Create a connection</h2>
+<pre><code>package susc
+import (
+    &quot;fmt&quot;
+)
+// StreamTCPConnect asks SAM for a TCP-Like connection to dest, has to be called on a new Client
+func (c *Client) StreamTCPConnect(id int32, dest string) error {
+    r, err := c.Command(&quot;STREAM CONNECT ID=%d DESTINATION=%s\n&quot;, id, dest)
+    if err != nil {
+        return err
+    }
+    result := r.Pairs[&quot;RESULT&quot;]
+    if result != &quot;OK&quot; {
+        return fmt.Errorf(&quot;Reply Error&quot;)
+    }
+    return nil
+}</code></pre>
+<div style="page-break-after: always;"></div>
+
+
+<div style="page-break-after: always;"></div>
+
+
 <div style="page-break-after: always;"></div>
 

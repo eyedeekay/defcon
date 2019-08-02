@@ -1,5 +1,3 @@
-Examples
-========
 susc
 ====
 
@@ -252,19 +250,6 @@ Create a connection
            return nil
        }
 
-
-.. raw:: html
-
-   <div style="page-break-after: always;"></div>
-
-
-.. raw:: pdf
-
-    PageBreak oneColumn
-
-.. raw:: latex
-
-    \newpage
 
 .. raw:: html
 

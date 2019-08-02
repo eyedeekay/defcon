@@ -12,8 +12,8 @@
 Workshop Title: I2P for Application Developers
 ==============================================
 
-Presenters
-----------
+Presenters: Crypto-Privacy Village
+----------------------------------
 
 -  idk
 
@@ -22,6 +22,16 @@ Presenters
 -  hankhill19580@gmail.com
 -  https://github.com/eyedeekay
 -  https://reddit.com/u/alreadyburnt
+
+Presenters: Monero Village
+--------------------------
+
+-  zzz
+
+-  I2P Developer
+-  Location Obfuscation is a pretty big part of the point
+-  zzz@mail.i2p
+-  http://zzz.i2p
 
 .. raw:: html
 
@@ -32,8 +42,8 @@ Presenters
 
     PageBreak oneColumn
 
-Current and Former I2P API's
-============================
+Current I2P API's
+=================
 
 ::
 
@@ -53,22 +63,30 @@ Current and Former I2P API's
     =-+---+-=            =------------=
       |   |
     =-+---|-------=
-    | |Str|eaming |
-    =-|---+-------=
-      |   |
-      | =-+------=    =-------------------=
-      | | SAM v3 +----+  SAM APPLICATIONS |
-      | =--------=    =-------------------=
-      |
-    =-+-----=      =-------------------=
-    | BOB   +------+  BOB APPLICATIONS |
-    =-------=      =-------------------=
+    |  Str|eaming |
+    =-----+-------=
+          |
+        =-+------=    =-------------------=
+        | SAM v3 +----+  SAM APPLICATIONS |
+        =--------=    =-------------------=
 
 A sketch of the I2P API's, their relationship to eachother, and their
 relationship to the router.
 
-I2CP
-----
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+`I2CP <https://geti2p.net/en/docs/protocol/i2cp>`__
+---------------------------------------------------
 
 I2CP is the core I2P API, it underlies many of the other I2P API's. It is also
 the most complex to use outside of Java, but recently several libraries have
@@ -76,30 +94,70 @@ emerged that provide partial or full I2CP functionality from other languages.
 C, Java, and Javascript libraries are available, as is one Go library with
 partial support.
 
-BOB
----
+-  https://geti2p.net/en/docs/protocol/i2cp
+-  https://geti2p.net/spec/i2cp
 
-BOB is a less complicated to use API, but it is currently unmaintained. We don't
-plan on dropping it soon, but we also have not been adding the new features
-that are available in SAM Version 3. Many of the best ideas from the BOB API
-have been ported to the more modern SAMv3 API. Our advice is that new
-applications should not be using BOB, and that the applications using BOB(Both
-of them) should consider migrating to SAM.
+.. raw:: latex
 
-SAM Version 1, 2
-----------------
+    \newpage
 
-Deprecated and for all intents and purposes removed.
+.. raw:: html
 
-I2PControl
-----------
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+`I2PTunnel <https://geti2p.net/en/docs/api/i2ptunnel>`__
+--------------------------------------------------------
+
+Java applications can also embed their own instances of I2PTunnel in order to
+use it to set up I2P tunnels. However, even non-java applications can take
+advantage of drop-in configuration of I2Ptunnel via i2ptunnel.config.d in the
+Java i2p router, or tunnels.conf.d in the C++ i2P router. In this way, regular
+clear-web applications can provide alternate configurations that automatically
+configure their I2P tunnels. If you ship i2ptunnel.config.d files, then any
+application can be turned into an I2P application without necessarily requiring
+any modification to the application's code.
+
+-  https://geti2p.net/en/docs/api/i2ptunnel
+
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+`I2PControl <https://geti2p.net/en/docs/api/i2pcontrol>`__
+----------------------------------------------------------
 
 I2PControl is a little different. Rather than setting up connections between
 I2P applications, it's used for configuring and retrieving information about the
 router programmatically.
 
-SAM Version 3
--------------
+-  https://geti2p.net/en/docs/api/i2pcontrol
+
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+`SAM Version 3 <https://geti2p.net/en/docs/api/samv3>`__
+--------------------------------------------------------
 
 The current recommended API for applications of all types to communicate via I2P
 is the SAMv3 API. It provides a convenient way to set up, communicate through,
@@ -108,6 +166,12 @@ familiar to your programming language in a simple and straightforward way. For
 example, we can implement a Socket in Java or a net.Conn in Go.
 
 SAM will by and large be the focus of this workshop.
+
+-  https://geti2p.net/en/docs/api/samv3
+
+.. raw:: latex
+
+    \newpage
 
 .. raw:: html
 
@@ -126,14 +190,30 @@ need the **SAMv3 API**.
 If you need to monitor or adjust the I2P router's connection, bandwidth usage,
 or change it's status, then you need the **I2PControl API**.
 
+If you need to set up tunnels for an already-existing Web Application, then
+I2Ptunnel, either by embedding it in your application or by placing files into
+i2ptunnel.config.d.
+
 If you need to simply check the presence of an I2P router before making
 connections, one way is to make a quick connection to the **I2CP API**. If
 you're writing a Java application, the I2CP API may also be a good choice.
 Besides that, unless you know why you need to use I2CP, you probably just need
 SAM.
 
-But Why Not Just Set Up I2PTunnel?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+But Why Not Just Tell Users to Set Up I2PTunnel via the existing WebUI?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 I2Ptunnel is good at forwarding existing services to I2P, and it can concievably
 be used for many applications. It does provide a SOCKS proxy after all. However,
@@ -149,6 +229,39 @@ on their first try. The process of setting up connections, deciding whether or
 not to "Bridge" clearnet connections or remain strictly anonymous, deciding
 tunnel length and the number of tunnels in your destination "Pool," and most
 other I2P connection-related functions.
+
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+What else do you need to think about?
+-------------------------------------
+
+Are you primarily:
+
+-  Publishing information or recieving it?
+-  Do you need ordered, Streaming-style communications
+-  Do you need unordered or semi-reliable Datagram-style communication
+-  Do you do peer discovery? How do you do peer discovery?
+-  When you do peer discovery, do you need to trust a service?
+-  Do you need to bootstrap off of a DHT?
+-  Do you want clients to be able to boostrap off of eachother?
+-  Do you want to also connect to clearnet clients?
+-  Do you need to be anonymous in mixed clearnet/I2P mode?
+-  Do you need to send datagrams in mixed clearnet/I2P mode?
+-  Do you want to allow people to bridge anonymous and non-anonymous clients?
+
+.. raw:: latex
+
+    \newpage
 
 .. raw:: html
 
@@ -168,10 +281,39 @@ to send datagrams, either with or without a repliable address. You can use these
 connections just like their TCP/IP equivalents for basically every intent or
 purpose.
 
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
 Stages of the SAM Setup process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Handshake
+2. Session Establishment
+3. Communication
+
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+Handshake
+~~~~~~~~~
 
 -  This is done so that you can negotiate the features of your SAM client with
    the SAM service.
@@ -181,25 +323,20 @@ Stages of the SAM Setup process
 -  When the server replies, it will respond with OK and the maximum supported
    SAM version.
 
-2. Session Establishment
+.. raw:: latex
 
--  Once your handshake is complete, you need to establish a session with SAM
-   to control connections.
--  To create a session, you send a "SESSION CREATE" message which must declare
-   the type of connection and messaging you will be doing, a unique name for
-   the connection which will allow you to refer to the client, and either a full
-   public/private base64-encoded key pair for the local tunnel or TRANSIENT for
-   a tunnel created with a new keypair for this session.
--  Optionally, it can specify a signature type. From now on, it is recommended
-   that libraries supporting SAM 3.1 or greater use ed25519 signatures by
-   default.
--  When the SAM service replies, it will return a result of either OK
-   indicating that the session was established successfully or a string
-   indicating the type of error that was encountered. If the session was
-   established successfully, the reply will also include the destination keypair
-   or the newly established session.
+    \newpage
 
-3. Connections/Messaging
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+Connections/Messaging
+~~~~~~~~~~~~~~~~~~~~~
 
 -  Now that you've established a session, you can start making connections
    and/or sending messages.
@@ -215,14 +352,47 @@ Stages of the SAM Setup process
    that socket will be done with I2P, whether it be an HTTP Client, a connection
    between bittorrent peers, or any other kind of Streaming communication.
 
-That all seems pretty complicated written out like that, but it's actually quite
-straightforward in practice and what you end up with is just a socket, and you
-can do whatever you would do with a regular socket. Applications that use
-sockets can usually simply substitute a regular socket for a SAM socket and it
-just works. Anything that builds on the socket can be made to build on a SAM
-socket, and anything that uses the SAM socketed alternative implementation can
-inherit I2P features.
+.. raw:: latex
 
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+Connections/Messaging
+~~~~~~~~~~~~~~~~~~~~~
+
+-  Now that you've established a session, you can start making connections
+   and/or sending messages.
+-  Streaming connections are bi-directional, and can either be connected as
+   a client to a server or listened upon to accept connections as a server to a
+   client. Predictably, the commands you send to the SAM bridge to set up each
+   kind of connection is "STREAM CONNECT" for connections and "STREAM ACCEPT"
+   for listeners.
+-  Datagrams can be sent after a datagram style session has been established
+   by sending datagrams to the socket. They can be repliable and include a return
+   address or raw and not include a return address.
+-  Once you have created a Streaming connection, any further communication on
+   that socket will be done with I2P, whether it be an HTTP Client, a connection
+   between bittorrent peers, or any other kind of Streaming communication.
+
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
 Make your Code Re-Usable!
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -247,314 +417,9 @@ existing application. I did that once. It works really well. I don't think we
 need a gazillion 'socat for I2P' out there but some would argue we didn't need
 a third so who am I to judge.
 
-susc
-====
+.. raw:: latex
 
-Simplest Useful SAM Streaming Client.
-
-This isn't intended to be very "good" right now, but rather to illustrate the
-simplest ways the concepts of SAM map onto it's clearnet equivalents. It's been
-created as a set of examples for Def Con 27. When it's done being a basic
-example it might become a socket library, but probably not. sam3 is better.
-
-.. _acceptgo:
-
-accept.go
-^^^^^^^^^
-
-::
-
-   package susc
-
-   import (
-       "fmt"
-   )
-
-   // StreamAccept asks SAM to accept a TCP-Like connection
-   func (c *Client) StreamAccept(id int32) (*Reply, error) {
-       r, err := c.Command("STREAM ACCEPT ID=%d SILENT=false\n", id)
-       if err != nil {
-           return nil, err
-       }
-
-       // TODO: move check into Command()
-       if r.Topic != "STREAM" || r.Type != "STATUS" {
-           return nil, fmt.Errorf("Unknown Reply: %+v\n", r)
-       }
-
-       result := r.Pairs["RESULT"]
-       if result != "OK" {
-           return nil, fmt.Errorf("Reply Error")
-       }
-
-       return r, nil
-   }
-
-.. _clientgo:
-
-client.go
-^^^^^^^^^
-
-::
-
-   package susc
-
-   import (
-       "net"
-           "encoding/binary"
-           "encoding/base32"
-       "encoding/base64"
-   )
-
-   type Client struct {
-       *net.TCPConn
-   }
-
-   var (
-       i2pB64enc *base64.Encoding = base64.NewEncoding("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~")
-       i2pB32enc *base32.Encoding = base32.NewEncoding("abcdefghijklmnopqrstuvwxyz234567")
-   )
-
-   func NewClient() (*Client, error) {
-       //var err error
-       var c Client
-       samaddr, err := net.ResolveTCPAddr("tcp", "127.0.0.1:7656")
-       if err != nil {
-           return nil, err
-       }
-       c.TCPConn, err = net.DialTCP("tcp", nil, samaddr)
-       if err != nil {
-           return nil, err
-       }
-       return &c, nil
-   }
-
-
-   // Base64 returns the base64 of the local tunnel
-   func Base64(destination string) string {
-       if destination != "" {
-           s, _ := i2pB64enc.DecodeString(destination)
-           alen := binary.BigEndian.Uint16(s[385:387])
-           return i2pB64enc.EncodeToString(s[:387+alen])
-       }
-       return ""
-   }
-
-.. _commandgo:
-
-command.go
-^^^^^^^^^^
-
-::
-
-   package susc
-
-   import (
-       "bufio"
-       "fmt"
-   )
-
-   // Command is a helper to send one command and return the reply as a string
-   func (c *Client) Command(str string, args ...interface{}) (*Reply, error) {
-       if _, err := fmt.Fprintf(c.TCPConn, str, args...); err != nil {
-           return nil, err
-       }
-       reader := bufio.NewReader(c.TCPConn)
-       line, _, err := reader.ReadLine()
-       if err != nil {
-           return nil, err
-       }
-
-       return ParseReply(string(line))
-   }
-
-.. _connectgo:
-
-connect.go
-^^^^^^^^^^
-
-::
-
-   package susc
-
-   import (
-       "fmt"
-   )
-
-   // StreamTCPConnect asks SAM for a TCP-Like connection to dest, has to be called on a new Client
-   func (c *Client) StreamTCPConnect(id int32, dest string) error {
-       r, err := c.Command("STREAM CONNECT ID=%d DESTINATION=%s\n", id, dest)
-       if err != nil {
-           return err
-       }
-
-       // TODO: move check into Command()
-       if r.Topic != "STREAM" || r.Type != "STATUS" {
-           return fmt.Errorf("Unknown Reply: %+v\n", r)
-       }
-
-       result := r.Pairs["RESULT"]
-       if result != "OK" {
-           return fmt.Errorf("Reply Error")
-       }
-
-       return nil
-   }
-
-.. _hellogo:
-
-hello.go
-^^^^^^^^
-
-::
-
-   package susc
-
-   import (
-       "fmt"
-   )
-
-   func (c *Client) Hello() error {
-       r, err := c.Command("HELLO VERSION MIN=3.0 MAX=3.2\n")
-       if err != nil {
-           return err
-       }
-
-       if r.Topic != "HELLO" {
-           return fmt.Errorf("Unknown Reply: %+v\n", r)
-       }
-
-       if r.Pairs["RESULT"] != "OK" {
-           return fmt.Errorf("Handshake did not succeed\nReply:%+v\n", r)
-       }
-
-       return nil
-   }
-
-.. _readgo:
-
-read.go
-^^^^^^^
-
-::
-
-   package susc
-
-   import (
-       "bufio"
-   )
-
-   func (c *Client) ReadLine() (string, error) {
-       reader := bufio.NewReader(c.TCPConn)
-       bytes, _, err := reader.ReadLine()
-       if err != nil {
-           return "", err
-       }
-       return string(bytes), nil
-   }
-
-.. _replygo:
-
-reply.go
-^^^^^^^^
-
-::
-
-   package susc
-
-   import (
-       "fmt"
-       "strings"
-   )
-
-   type Reply struct {
-       Topic string
-       Type  string
-
-       Pairs map[string]string
-   }
-
-   func ParseReply(line string) (*Reply, error) {
-       line = strings.TrimSpace(line)
-       parts := strings.Split(line, " ")
-       if len(parts) < 3 {
-           return nil, fmt.Errorf("Malformed Reply.\n%s\n", line)
-       }
-
-       r := &Reply{
-           Topic: parts[0],
-           Type:  parts[1],
-           Pairs: make(map[string]string, len(parts)-2),
-       }
-
-       for _, v := range parts[2:] {
-           kvPair := strings.SplitN(v, "=", 2)
-           if kvPair != nil {
-               if len(kvPair) != 2 {
-                   return nil, fmt.Errorf("Malformed key-value-pair.\n%s\n", kvPair)
-               }
-           }
-
-           r.Pairs[kvPair[0]] = kvPair[len(kvPair)-1]
-       }
-
-       return r, nil
-   }
-
-.. _sessiongo:
-
-session.go
-^^^^^^^^^^
-
-::
-
-   package susc
-
-   import (
-       "fmt"
-   )
-
-   func (c *Client) CreateStreamSession(id int32, dest, sigtype, options string) (string, error) {
-       if dest == "" {
-           dest = "TRANSIENT"
-       }
-       r, err := c.Command(
-           "SESSION CREATE STYLE=STREAM ID=%d DESTINATION=%s %s %s\n",
-           id,
-           dest,
-           sigtype,
-           options,
-       )
-       if err != nil {
-           return "", err
-       }
-
-       // TODO: move check into Command()
-       if r.Topic != "SESSION" || r.Type != "STATUS" {
-           return "", fmt.Errorf("Unknown Reply: %+v\n", r)
-       }
-
-       result := r.Pairs["RESULT"]
-       if result != "OK" {
-           return "", fmt.Errorf("Reply error")
-       }
-       return r.Pairs["DESTINATION"], nil
-   }
-
-.. _writego:
-
-write.go
-^^^^^^^^
-
-::
-
-   package susc
-
-   // Write implements the TCPConn Write method.
-   func (c *Client) Write(b []byte) (int, error) {
-       return c.TCPConn.Write(b)
-   }
-
+    \newpage
 
 .. raw:: html
 
@@ -581,6 +446,18 @@ Since this is a Windows machine, we can't *assume* that a package manager is
 available with a viable I2P router to install. If that's the case, we'll have to
 install our own.
 
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
 Kicking off a child installer with NSIS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -614,6 +491,18 @@ file is copied to the I2P application data directory. We can **ONLY** do it in
 this case because we already determines that I2P was not installed, and it is
 **ONLY** in this example in this way because 0.9.42 isn't out yet.
 
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
 Wait, how can I make sure the router I am bundling is current?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -651,17 +540,10 @@ Well here's how I once did it in a Makefile:
        cat .geti2p.url | tr -d '\n' | tee geti2p.url
        rm -f .geti2p.url
 
-As we move past 0.9.42,
 
-Wait, what if I don't want to make my clients install a JVM?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. raw:: latex
 
-Enter Jlink, i2pd TODO
-
-Wait, how to I finally make sure that it has the SAM API enabled?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Use clients.config.d TODO
+    \newpage
 
 .. raw:: html
 
@@ -671,32 +553,85 @@ Use clients.config.d TODO
 .. raw:: pdf
 
     PageBreak oneColumn
-Two big things, and one little thing, that SAM can't do and how to easily forget about them
--------------------------------------------------------------------------------------------
+Wait, what if I don't want to make my clients install a JVM?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Two projects at least have been working on using the 'Jlink' tool to produce
+an I2P router that does not require the use of a JVM, those include i2p-zero
+from the Monero project and the Zero-Dependency installer from the I2P project.
+These may be preferable choices if you are bundling a router to use with a
+non-java application and are averse to requiring your users to install a JVM.
+
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+Wait, how to I finally make sure that it has the SAM API enabled?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Now that we're sure an I2P router is installed, we need to make sure that a SAM
+API is available to your application to use. Since 0.9.42, all platforms that
+use SAM can also use clients.config.d. That way, you can drop a file in to an
+I2P router you have just installed or one that exists on the computer already,
+without needing to worry about over-writing or otherwise harmfully altering
+a potentially sensitive configuation file.
+
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+Embedding an I2P Router in your Java Application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Not quite done with this one yet. For now, the link.
+
+http://i2p-projekt.i2p/en/docs/applications/embedding
+
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+Two big things that SAM can't do and how to easily forget about them
+--------------------------------------------------------------------
 
 Tell you that an I2P router is running when SAM is not enabled
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+To do this effectively, you need to check for the existence of an I2CP port, but
+you don't need to actually use I2CP for anything else.
+
 Adjust the I2P Router's settings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Natively use an outproxy
-^^^^^^^^^^^^^^^^^^^^^^^^
+To do this, you need to use i2pcontrol.
 
-Outproxy is a concept primarily known to i2ptunnel, and with i2ptunnel,
-primarily known to the HTTP and SOCKS proxies. SAM doesn't consider outproxying
-at all on it's own. If you are using SAM and want to access the clear net, you
-may wish to use an additional anonymizer when handling clearnet traffic, or
-offer a "Bridged" mode which is not anonymous but which is useful for bringing
-content to anonymous users
+.. raw:: latex
 
-That said, since SAM connections can be used like their non-anonymous
-counterparts, it is actually very simple to use SAM to build an out-proxy. While
-this technique hasn't been used yet, and it would require careful considerations
-for the anonymity of the applications, there are cases where a SAM-based
-outproxy would be useful to incorporate into an application. One such
-application would be a peer-to-peer CDN which bridges I2P and clearnet
-content.
+    \newpage
 
 .. raw:: html
 
@@ -708,6 +643,284 @@ content.
     PageBreak oneColumn
 Examples
 ========
+susc
+====
+
+Simplest Useful SAM Streaming Client.
+
+This isn't intended to be very "good" right now, but rather to illustrate the
+simplest ways the concepts of SAM map onto it's clearnet equivalents. It's been
+created as a set of examples for Def Con 27. When it's done being a basic
+example it might become a socket library, but probably not. sam3 is better.
+
+A simple TCP client
+-------------------
+
+::
+
+       package susc
+       import (
+           "encoding/base32"
+           "encoding/base64"
+           "encoding/binary"
+           "net"
+       )
+       // Client: A SAM Client is just a socket once it's set up.
+       type Client struct {
+           *net.TCPConn
+       }
+       // I2P uses a slightly altered base64 alphabet. You will need to customize your
+       // encoder to use it.
+       var (
+           i2pB64enc *base64.Encoding = base64.NewEncoding("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-~")
+           i2pB32enc *base32.Encoding = base32.NewEncoding("abcdefghijklmnopqrstuvwxyz234567")
+       )
+       // NewClient: To create a new client, create a TCP Connection to a SAM Service.
+       func NewClient() (*Client, error) {
+           //var err error
+           var c Client
+           // The default SAM address is localhost:7656
+           samaddr, err := net.ResolveTCPAddr("tcp", "127.0.0.1:7656")
+           if err != nil {
+               return nil, err
+           }
+           // When you create your client, establish your connection to SAM.
+           c.TCPConn, err = net.DialTCP("tcp", nil, samaddr)
+           if err != nil {
+               return nil, err
+           }
+           return &c, nil
+       }
+       // Base64 returns the base64 destination of the tunnel from the full destination.
+       // It's very helpful for SAM libraries to include a function like this even
+       // though it's not part of the spec
+       func Base64(destination string) string {
+           if destination != "" {
+               // Decode the base64 string to it's binary form
+               s, _ := i2pB64enc.DecodeString(destination)
+               // Take the length bits from the binary representation
+               alen := binary.BigEndian.Uint16(s[385:387])
+               // take the first 387 bits, + the length reported by the length bits,
+               // from the binary representation and re-encode it to base64.
+               return i2pB64enc.EncodeToString(s[:387+alen])
+           }
+           return ""
+       }
+
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+A function to send commands
+---------------------------
+
+::
+
+       package susc
+       import (
+           "bufio"
+           "fmt"
+       )
+       // Command is a helper to send one command and return the reply as a string
+       func (c *Client) Command(str string, args ...interface{}) (*Reply, error) {
+           if _, err := fmt.Fprintf(c.TCPConn, str, args...); err != nil {
+               return nil, err
+           }
+           reader := bufio.NewReader(c.TCPConn)
+           line, _, err := reader.ReadLine()
+           if err != nil {
+               return nil, err
+           }
+           return ParseReply(string(line))
+       }
+
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+A reply parser
+--------------
+
+::
+
+       package susc
+       import (
+           "fmt"
+           "strings"
+       )
+       // Reply is a structure that represents a reply to the SAM bridge for
+       // convenience sake
+       type Reply struct {
+           Topic string
+           Type  string
+           Pairs map[string]string
+       }
+       // ParseReply takes a string reply from the SAM bridge and turns it into a Reply
+       // object for later use.
+       func ParseReply(line string) (*Reply, error) {
+           line = strings.TrimSpace(line)
+           parts := strings.Split(line, " ")
+           if len(parts) < 3 {
+               return nil, fmt.Errorf("Malformed Reply.\n%s\n", line)
+           }
+           r := &Reply{
+               Topic: parts[0],
+               Type:  parts[1],
+               Pairs: make(map[string]string, len(parts)-2),
+           }
+           for _, v := range parts[2:] {
+               kvPair := strings.SplitN(v, "=", 2)
+               if kvPair != nil {
+                   if len(kvPair) != 2 {
+                       return nil, fmt.Errorf("Malformed key-value-pair.\n%s\n", kvPair)
+                   }
+               }
+               r.Pairs[kvPair[0]] = kvPair[len(kvPair)-1]
+           }
+           return r, nil
+       }
+
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+Do the handshake
+----------------
+
+::
+
+       package susc
+       import (
+           "fmt"
+       )
+       // Hello does the handshake with the SAM bridge
+       func (c *Client) Hello() error {
+           reply, err := c.Command("HELLO VERSION MIN=3.0 MAX=3.2\n")
+           if err != nil {
+               return err
+           }
+           if reply.Topic != "HELLO" {
+               return fmt.Errorf("Unknown Reply: %+v\n", r)
+           }
+           if reply.Pairs["RESULT"] != "OK" {
+               return fmt.Errorf("Handshake did not succeed\nReply:%+v\n", r)
+           }
+           return nil
+       }
+
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+Establish a session
+-------------------
+
+::
+
+       package susc
+       import (
+           "fmt"
+       )
+       // CreateStreamSession: finally creates a streaming session. You can now use
+       // your socket.
+       func (c *Client) CreateStreamSession(id int32, dest, sigtype, options string) (string, error) {
+           if dest == "" {
+               dest = "TRANSIENT"
+           }
+           r, err := c.Command(
+               "SESSION CREATE STYLE=STREAM ID=%d DESTINATION=%s %s %s\n",
+               id,
+               dest,
+               sigtype,
+               options,
+           )
+           if err != nil {
+               return "", err
+           }
+           result := r.Pairs["RESULT"]
+           if result != "OK" {
+               return "", fmt.Errorf("Reply error")
+           }
+           return r.Pairs["DESTINATION"], nil
+       }
+
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+Create a connection
+-------------------
+
+::
+
+       package susc
+       import (
+           "fmt"
+       )
+       // StreamTCPConnect asks SAM for a TCP-Like connection to dest, has to be called on a new Client
+       func (c *Client) StreamTCPConnect(id int32, dest string) error {
+           r, err := c.Command("STREAM CONNECT ID=%d DESTINATION=%s\n", id, dest)
+           if err != nil {
+               return err
+           }
+           result := r.Pairs["RESULT"]
+           if result != "OK" {
+               return fmt.Errorf("Reply Error")
+           }
+           return nil
+       }
+
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+
+.. raw:: latex
+
+    \newpage
 
 .. raw:: html
 

@@ -136,17 +136,17 @@
 
 <div style="page-break-after: always;"></div>
 
-<h3 id="connectionsmessaging">Connections/Messaging</h3>
+<h3 id="session-establishment">Session Establishment</h3>
 <ul>
-<li>Now that you've established a session, you can start making connections and/or sending messages.</li>
-<li>Streaming connections are bi-directional, and can either be connected as a client to a server or listened upon to accept connections as a server to a client. Predictably, the commands you send to the SAM bridge to set up each kind of connection is &quot;STREAM CONNECT&quot; for connections and &quot;STREAM ACCEPT&quot; for listeners.</li>
-<li>Datagrams can be sent after a datagram style session has been established by sending datagrams to the socket. They can be repliable and include a return address or raw and not include a return address.</li>
-<li>Once you have created a Streaming connection, any further communication on that socket will be done with I2P, whether it be an HTTP Client, a connection between bittorrent peers, or any other kind of Streaming communication.</li>
+<li>Once your handshake is complete, you need to establish a session with SAM to control connections.</li>
+<li>To create a session, you send a &quot;SESSION CREATE&quot; message which must declare the type of connection and messaging you will be doing, a unique name for the connection which will allow you to refer to the client, and either a full public/private base64-encoded key pair for the local tunnel or TRANSIENT for a tunnel created with a new keypair for this session.</li>
+<li>Optionally, it can specify a signature type. From now on, it is recommended that libraries supporting SAM 3.1 or greater use ed25519 signatures by default.</li>
+<li>When the SAM service replies, it will return a result of either OK indicating that the session was established successfully or a string indicating the type of error that was encountered. If the session was established successfully, the reply will also include the destination keypair or the newly established session.</li>
 </ul>
 
 <div style="page-break-after: always;"></div>
 
-<h3 id="connectionsmessaging-1">Connections/Messaging</h3>
+<h3 id="connectionsmessaging">Connections/Messaging</h3>
 <ul>
 <li>Now that you've established a session, you can start making connections and/or sending messages.</li>
 <li>Streaming connections are bi-directional, and can either be connected as a client to a server or listened upon to accept connections as a server to a client. Predictably, the commands you send to the SAM bridge to set up each kind of connection is &quot;STREAM CONNECT&quot; for connections and &quot;STREAM ACCEPT&quot; for listeners.</li>
@@ -238,8 +238,21 @@ url:
 <div style="page-break-after: always;"></div>
 
 <h3 id="embedding-an-i2p-router-in-your-java-application">Embedding an I2P Router in your Java Application</h3>
-<p>Not quite done with this one yet. For now, the link.</p>
-<p><a href="http://i2p-projekt.i2p/en/docs/applications/embedding" class="uri">http://i2p-projekt.i2p/en/docs/applications/embedding</a></p>
+<p>JVM applications have another, more flexible way of working with I2P. They can use I2P as a library and selectively include and configue the components they use. This is how BiglyBT works with I2P for example.</p>
+
+<div style="page-break-after: always;"></div>
+
+<h3 id="considerations-for-embedding-an-i2p-router">Considerations for embedding an I2P router</h3>
+<p>While flexible, this method requires somewhat more preparation and consideration than relying on an external I2P router.</p>
+<ol type="1">
+<li>You will need to compile the parts of the router you want into your application.</li>
+<li>You will need to periodially update your I2P router source code in order to update the i2p router embedded in your application.</li>
+<li>You will need to store your configuration and some information about the network and the router.</li>
+<li>You may wish to disable the Floodfill status in your embedded router. This is fine.</li>
+<li>You may wish to disable participating traffic in your embedded router. In most cases, we would rather you not do this.</li>
+<li>YOu should allow the user to rely on an I2P router that is already installed on the system if one is present, so the user doesn't have to effectively</li>
+</ol>
+<p>For more information, see the embedding guide: <a href="http://i2p-projekt.i2p/en/docs/applications/embedding" class="uri">http://i2p-projekt.i2p/en/docs/applications/embedding</a></p>
 
 <div style="page-break-after: always;"></div>
 

@@ -44,6 +44,7 @@ rst: meta
 	torst 03-WHAT_IS_SAM.md | tee what_is_sam.rst
 	torst 03-STAGES.md | tee sam_stages.rst
 	torst 03-HANDSHAKE.md | tee sam_handshake.rst
+	torst 03-SESSION.md | tee sam_session.rst
 	torst 03-CONNECTIONS.md | tee sam_connection.rst
 	torst 03-REUSE.md | tee sam_reuse.rst
 	torst 04-BUNDLING.md | tee bundling_i2p.rst
@@ -52,6 +53,7 @@ rst: meta
 	torst 04-JLINK.md | tee jlink.rst
 	torst 04-CONFIG.md | tee config.rst
 	torst 04-EMBEDDING.md | tee embedding_i2p.rst
+	torst 04-CONSIDER.md | tee consider_embedding.rst
 	torst 05-WHAT_SAM_CANT_DO.md | tee what_sam_cant_do.rst
 	torst 06-EXAMPLES.md | tee examples.rst
 	make susc
@@ -67,7 +69,7 @@ rst: meta
 		what_is_sam.rst SPACER.rst \
 		sam_stages.rst SPACER.rst \
 		sam_handshake.rst SPACER.rst \
-		sam_connection.rst SPACER.rst \
+		sam_session.rst SPACER.rst \
 		sam_connection.rst SPACER.rst \
 		sam_reuse.rst SPACER.rst \
 		bundling_i2p.rst SPACER.rst \
@@ -76,6 +78,7 @@ rst: meta
 		jlink.rst SPACER.rst \
 		config.rst SPACER.rst \
 		embedding_i2p.rst SPACER.rst \
+		consider_embedding.rst SPACER.rst \
 		what_sam_cant_do.rst SPACER.rst \
 		examples.rst SPACER.rst > README.rst
 

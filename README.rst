@@ -335,22 +335,24 @@ Handshake
 .. raw:: pdf
 
     PageBreak oneColumn
-Connections/Messaging
+Session Establishment
 ~~~~~~~~~~~~~~~~~~~~~
 
--  Now that you've established a session, you can start making connections
-   and/or sending messages.
--  Streaming connections are bi-directional, and can either be connected as
-   a client to a server or listened upon to accept connections as a server to a
-   client. Predictably, the commands you send to the SAM bridge to set up each
-   kind of connection is "STREAM CONNECT" for connections and "STREAM ACCEPT"
-   for listeners.
--  Datagrams can be sent after a datagram style session has been established
-   by sending datagrams to the socket. They can be repliable and include a return
-   address or raw and not include a return address.
--  Once you have created a Streaming connection, any further communication on
-   that socket will be done with I2P, whether it be an HTTP Client, a connection
-   between bittorrent peers, or any other kind of Streaming communication.
+-  Once your handshake is complete, you need to establish a session with SAM
+   to control connections.
+-  To create a session, you send a "SESSION CREATE" message which must declare
+   the type of connection and messaging you will be doing, a unique name for
+   the connection which will allow you to refer to the client, and either a full
+   public/private base64-encoded key pair for the local tunnel or TRANSIENT for
+   a tunnel created with a new keypair for this session.
+-  Optionally, it can specify a signature type. From now on, it is recommended
+   that libraries supporting SAM 3.1 or greater use ed25519 signatures by
+   default.
+-  When the SAM service replies, it will return a result of either OK
+   indicating that the session was established successfully or a string
+   indicating the type of error that was encountered. If the session was
+   established successfully, the reply will also include the destination keypair
+   or the newly established session.
 
 .. raw:: latex
 
@@ -599,9 +601,43 @@ a potentially sensitive configuation file.
 Embedding an I2P Router in your Java Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Not quite done with this one yet. For now, the link.
+JVM applications have another, more flexible way of working with I2P. They can
+use I2P as a library and selectively include and configue the components they
+use. This is how BiglyBT works with I2P for example.
 
-http://i2p-projekt.i2p/en/docs/applications/embedding
+.. raw:: latex
+
+    \newpage
+
+.. raw:: html
+
+   <div style="page-break-after: always;"></div>
+
+
+.. raw:: pdf
+
+    PageBreak oneColumn
+Considerations for embedding an I2P router
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+While flexible, this method requires somewhat more preparation and consideration
+than relying on an external I2P router.
+
+1. You will need to compile the parts of the router you want into your
+   application.
+2. You will need to periodially update your I2P router source code in order
+   to update the i2p router embedded in your application.
+3. You will need to store your configuration and some information about the
+   network and the router.
+4. You may wish to disable the Floodfill status in your embedded router. This
+   is fine.
+5. You may wish to disable participating traffic in your embedded router. In
+   most cases, we would rather you not do this.
+6. YOu should allow the user to rely on an I2P router that is already
+   installed on the system if one is present, so the user doesn't have to
+   effectively
+
+For more information, see the embedding guide: http://i2p-projekt.i2p/en/docs/applications/embedding
 
 .. raw:: latex
 

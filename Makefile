@@ -11,6 +11,7 @@ new: README rst
 	sed -i 's\|</code></pre>\|\g' index.html
 	sed -i 's\<pre><code>=\=\g' index.html
 	pandoc -p -t html5 --css=style.css --highlight-style=tango index.html -o README.pdf
+	pdfbook README.pdf
 
 plan:
 	pandoc --highlight-style=tango -f gfm PLAN.md -o - | tee -a index.html
@@ -55,7 +56,7 @@ rst: meta
 	torst 04-EMBEDDING.md | tee embedding_i2p.rst
 	torst 04-CONSIDER.md | tee consider_embedding.rst
 	torst 05-WHAT_SAM_CANT_DO.md | tee what_sam_cant_do.rst
-	torst 06-EXAMPLES.md | tee examples.rst
+	torst 06-EXAMPLES.md | tee libraries.rst
 	make susc
 	cat IMAGE.rst COVER.rst \
 		current_apis.rst SPACER.rst \
@@ -80,10 +81,13 @@ rst: meta
 		embedding_i2p.rst SPACER.rst \
 		consider_embedding.rst SPACER.rst \
 		what_sam_cant_do.rst SPACER.rst \
+		libraries.rst SPACER.rst \
 		examples.rst SPACER.rst > README.rst
 
 susc:
 	cp $(GOPATH)/src/github.com/eyedeekay/susc/PRINTOUT.rst 03-SUSC.rst
+	@echo "Examples" | tee examples.rst
+	@echo "========" | tee -a examples.rst
 	cat 03-SUSC.rst SPACER.rst | tee -a examples.rst
 
 README:

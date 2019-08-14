@@ -1,4 +1,7 @@
-body { font-family: monospace }
+body {
+    font-family: monospace;
+    font-size: x-large;
+}
 
 img {
     width:100%;
@@ -16,3 +19,24 @@ pre{
 blockquote{
     white-space: pre-wrap;
 }
+
+
+table {
+  table-layout: auto;
+  width: 96%;
+  border: 1px solid;
+  font-size: small;
+}
+
+td {
+  border: 1px solid;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 50px;
+  text-overflow: ellipsis;
+}
+
+th {
+  height: 50px
+}
+

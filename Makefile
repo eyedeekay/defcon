@@ -3,14 +3,18 @@ help:
 	@cat README_REPO.md
 
 new: README rst
+
+all: new build
 	pandoc -p -t html5 --css=style.css --highlight-style=tango -f rst README.rst -o index.html
+
+build:
 	#sed -i 's|<blockquote>|<pre><code>|g' index.html
 	#sed -i 's|<p>=||g' index.html
 	#sed -i 's|</blockquote>|</pre></code>|g' index.html
 	#sed -i 's|=</p>||g' index.html
 	sed -i 's\|</code></pre>\|\g' index.html
 	sed -i 's\<pre><code>=\=\g' index.html
-	pandoc -p -t html5 --css=style.css --highlight-style=tango index.html -o README.pdf
+	pandoc -p -t html --css=style.css --highlight-style=tango index.html -o README.pdf
 	pdfbook README.pdf
 
 plan:
@@ -81,8 +85,8 @@ rst: meta
 		embedding_i2p.rst SPACER.rst \
 		consider_embedding.rst SPACER.rst \
 		what_sam_cant_do.rst SPACER.rst \
-		libraries.rst SPACER.rst \
-		examples.rst SPACER.rst > README.rst
+		examples.rst SPACER.rst \
+		libraries.rst SPACER.rst > README.rst
 
 susc:
 	cp $(GOPATH)/src/github.com/eyedeekay/susc/PRINTOUT.rst 03-SUSC.rst
